@@ -2,6 +2,8 @@ const AUTH_RETURN_PARAM = "next";
 
 const ALLOWED_RETURN_PREFIXES = ["/dashboard", "/admin"] as const;
 
+const ALLOWED_RETURN_PATHS = ["/", "/#pricing"] as const;
+
 export function getAuthReturnParamName() {
   return AUTH_RETURN_PARAM;
 }
@@ -9,6 +11,14 @@ export function getAuthReturnParamName() {
 export function sanitizeAuthReturnUrl(value: string | null | undefined) {
   if (value == null || value.length === 0) return null;
   if (!value.startsWith("/") || value.startsWith("//")) return null;
+
+  if (
+    ALLOWED_RETURN_PATHS.includes(
+      value as (typeof ALLOWED_RETURN_PATHS)[number],
+    )
+  ) {
+    return value;
+  }
 
   const isAllowed = ALLOWED_RETURN_PREFIXES.some(
     (prefix) => value === prefix || value.startsWith(`${prefix}/`),

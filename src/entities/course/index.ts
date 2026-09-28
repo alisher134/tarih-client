@@ -12,6 +12,8 @@ export { deleteMaterial } from "./api/delete-material";
 export { deleteQuestion } from "./api/delete-question";
 export { deleteTest } from "./api/delete-test";
 export { getActiveTestAttempt } from "./api/get-active-test-attempt";
+export { getTestAttemptDraft } from "./api/get-test-attempt-draft";
+export { saveTestAttemptDraft } from "./api/save-test-attempt-draft";
 export { getAdminCourse } from "./api/get-admin-course";
 export { getAdminCourses } from "./api/get-admin-courses";
 export { getCourseBySlug } from "./api/get-course-by-slug";
@@ -39,6 +41,7 @@ export type {
   Course,
   CourseDetail,
   CourseEnrollment,
+  CourseEnrollmentStatus,
   CourseFavorite,
   CourseLesson,
   CourseStatus,

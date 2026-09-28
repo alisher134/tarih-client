@@ -7,6 +7,7 @@
   "searchPlaceholder": "Курс атауы",
   "details": "Толығырақ",
   "continue": "Жалғастыру",
+  "openCourse": "Курсты ашу",
   "watchLesson": "Сабақты көру",
   "takeTest": "Тест тапсыру",
   "courseCompleted": "Курс аяқталды",
@@ -46,6 +47,8 @@
   "errors": {
     "loadFailed": "Курстарды жүктеу мүмкін болмады",
     "courseLoadFailed": "Курсты жүктеу мүмкін болмады",
+    "subscriptionLoadFailed": "Жазылымды тексеру мүмкін болмады",
+    "learningSummaryLoadFailed": "Курс прогрессін жүктеу мүмкін болмады",
     "favoriteFailed": "Сақталған курстарды жаңарту мүмкін болмады"
   }
 }

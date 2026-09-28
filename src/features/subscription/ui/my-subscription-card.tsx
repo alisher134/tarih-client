@@ -24,7 +24,9 @@ export function MySubscriptionCard() {
 
   return (
     <section className="flex flex-col gap-4">
-      <SectionHeading description={t("description")}>{t("title")}</SectionHeading>
+      <SectionHeading description={t("description")}>
+        {t("title")}
+      </SectionHeading>
 
       <AsyncWrapper
         isLoading={isLoading}
@@ -127,15 +129,21 @@ export function MySubscriptionCard() {
                       </div>
                     </dl>
 
-                    <Show when={upcomingSubscription != null}>
-                      <p className="text-sm text-muted-foreground">
-                        {t("upcomingRenewal", {
-                          date: formatDateTime(
-                            upcomingSubscription!.startsAt,
-                            locale,
-                          ),
-                        })}
-                      </p>
+                    <Show
+                      when={upcomingSubscription != null}
+                      data={upcomingSubscription}
+                    >
+                      {(upcoming) => {
+                        if (upcoming == null) return null;
+
+                        return (
+                          <p className="text-sm text-muted-foreground">
+                            {t("upcomingRenewal", {
+                              date: formatDateTime(upcoming.startsAt, locale),
+                            })}
+                          </p>
+                        );
+                      }}
                     </Show>
 
                     <TelegramPurchaseButton

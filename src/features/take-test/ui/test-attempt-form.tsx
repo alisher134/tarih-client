@@ -5,10 +5,7 @@ import { useCallback, useState } from "react";
 import { useTranslations } from "next-intl";
 
 import type { StudentLessonTest, TestAttempt } from "@/entities/course";
-import {
-  getLocalizedApiErrorMessage,
-  isApiErrorCode,
-} from "@/shared/api";
+import { getLocalizedApiErrorMessage, isApiErrorCode } from "@/shared/api";
 import { Button } from "@/shared/ui/button";
 import { EmptyState } from "@/shared/ui/empty-state";
 import { ErrorAlert } from "@/shared/ui/error-alert";
@@ -22,6 +19,7 @@ import {
   type AnswerMap,
 } from "../lib/answers";
 import { useSubmitAttempt } from "../model/use-submit-attempt";
+import { useTestAttemptDraft } from "../model/use-test-attempt-draft";
 import { TestQuestion } from "./test-question";
 import { TestTimer } from "./test-timer";
 
@@ -52,6 +50,17 @@ export function TestAttemptForm({
   const sortedQuestions = [...test.questions].sort(
     (left, right) => left.order - right.order,
   );
+
+  const handleHydrateDraft = useCallback((draftAnswers: AnswerMap) => {
+    setAnswers(draftAnswers);
+  }, []);
+
+  const { isDraftUnsupported } = useTestAttemptDraft({
+    attemptId: attempt.id,
+    enabled: !isExpired && !hasTimedOut,
+    answers,
+    onHydrate: handleHydrateDraft,
+  });
 
   const submitAnswers = useCallback(
     (nextAnswers: AnswerMap, options?: { force?: boolean }) => {
@@ -140,6 +149,10 @@ export function TestAttemptForm({
 
       <Show when={submitError != null}>
         <ErrorAlert errorMessage={submitError!} />
+      </Show>
+
+      <Show when={isDraftUnsupported}>
+        <p className="text-sm text-muted-foreground">{t("refreshWarning")}</p>
       </Show>
 
       <Show

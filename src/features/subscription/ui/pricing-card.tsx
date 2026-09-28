@@ -59,7 +59,9 @@ export function PricingCard({
         </p>
       </CardContent>
 
-      <CardFooter className="border-t pt-(--card-spacing)">{action}</CardFooter>
+      <CardFooter className="w-full border-t pt-(--card-spacing)">
+        {action}
+      </CardFooter>
     </Card>
   );
 }

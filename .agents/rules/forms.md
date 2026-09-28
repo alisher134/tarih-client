@@ -7,14 +7,14 @@ alwaysApply: true
 
 Stack: `useZodForm` + zod schema + `AppForm` render prop + field components. Fields are presentational: they take `label`, `error`, and input props. They do **not** call `useFormContext`, `register`, or `useController`. Wire RHF only in the feature, through `AppForm`’s `children(form)`.
 
-| Need | Use |
-|---|---|
-| `useForm` + `zodResolver` | `useZodForm` from `@/shared/hooks/use-zod-form` |
-| `<form>` + `FormProvider` + `handleSubmit` | `AppForm` from `@/shared/ui/app-form` |
-| text input | `InputField` |
-| email | `EmailField` |
-| password (show/hide) | `PasswordField` |
-| schema | `z.object` in the feature `model/` |
+| Need                                       | Use                                             |
+| ------------------------------------------ | ----------------------------------------------- |
+| `useForm` + `zodResolver`                  | `useZodForm` from `@/shared/hooks/use-zod-form` |
+| `<form>` + `FormProvider` + `handleSubmit` | `AppForm` from `@/shared/ui/app-form`           |
+| text input                                 | `InputField`                                    |
+| email                                      | `EmailField`                                    |
+| password (show/hide)                       | `PasswordField`                                 |
+| schema                                     | `z.object` in the feature `model/`              |
 
 Do not add `useFormField`, shadcn `Form` / `FormField`, or bind `name` inside shared fields.
 
@@ -192,7 +192,9 @@ The form component is `"use client"` (hooks + submit). Schema and types stay in 
 ```tsx
 "use client";
 const schema = z.object({ email: z.string() });
-export function LoginForm() { /* fetch, schema, markup */ }
+export function LoginForm() {
+  /* fetch, schema, markup */
+}
 ```
 
 ### GOOD — split

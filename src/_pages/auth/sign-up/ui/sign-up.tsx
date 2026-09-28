@@ -1,8 +1,8 @@
 import { getTranslations } from "next-intl/server";
 
+import { AuthFormSwitchLink } from "@/features/require-auth/ui/auth-form-switch-link";
 import { AuthFormLayout } from "@/widgets/auth-form-layout";
 import { SignUpForm } from "@/features/sign-up";
-import { LinkButton } from "@/shared/ui/link-button";
 
 export async function SignUp() {
   const t = await getTranslations("signUp");
@@ -13,13 +13,7 @@ export async function SignUp() {
       footer={
         <>
           {t("hasAccount")}{" "}
-          <LinkButton
-            href="/sign-in"
-            variant="link"
-            className="inline h-auto p-0"
-          >
-            {t("signIn")}
-          </LinkButton>
+          <AuthFormSwitchLink href="/sign-in" label={t("signIn")} />
         </>
       }
     >

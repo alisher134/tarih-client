@@ -21,23 +21,45 @@ export function useCoursePage(slug: string) {
     (item) =>
       item.course.slug === slug || item.course.id === courseQuery.data?.id,
   );
+  const summaryEnrollment = learningSummaryQuery.data?.enrollment;
+  const enrollmentProgress =
+    summaryEnrollment != null
+      ? {
+          progress: summaryEnrollment.progress,
+          status: summaryEnrollment.status,
+          isStarted: summaryEnrollment.progress > 0,
+        }
+      : myCourse != null
+        ? {
+            progress: myCourse.progress,
+            status: myCourse.status,
+            isStarted: myCourse.isStarted,
+          }
+        : null;
   const isFavorite =
     favoritesQuery.data?.some(
       (item) => item.courseId === courseQuery.data?.id,
     ) === true;
-  const isAccessLoading = access.isLoading;
 
   return {
     course: courseQuery.data,
-    myCourse,
+    enrollmentProgress,
     isFavorite,
     canAccess: access.hasAccess,
+    isAccessDenied: access.isAccessDenied,
+    isAccessLoading: access.isLoading,
+    isAccessError: access.isError,
+    accessError: access.error,
     nextAction: learningSummaryQuery.data?.nextAction,
-    isLearningSummaryLoading: learningSummaryQuery.isLoading,
+    isLearningSummaryLoading:
+      access.hasAccess && learningSummaryQuery.isLoading,
+    isLearningSummaryError: access.hasAccess && learningSummaryQuery.isError,
+    learningSummaryError: learningSummaryQuery.error,
     isLoading: courseQuery.isLoading,
-    isAccessLoading,
     isError: courseQuery.isError,
     error: courseQuery.error,
     refetch: courseQuery.refetch,
+    refetchSubscription: access.refetchSubscription,
+    refetchLearningSummary: learningSummaryQuery.refetch,
   };
 }

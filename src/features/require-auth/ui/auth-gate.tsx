@@ -5,11 +5,16 @@ import { useEffect, type ReactNode } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 
 import { resetSession } from "@/entities/session";
-import { usePathname, useRouter, useSearchParams } from "@/shared/config/i18n/navigation";
+import {
+  usePathname,
+  useRouter,
+  useSearchParams,
+} from "@/shared/config/i18n/navigation";
 import { buildSignInHref } from "@/shared/lib/auth-return-url";
 
 import { useAuthGate } from "../model/use-auth-gate";
 import { AuthGateLoader } from "./auth-gate-loader";
+import { AuthGateSessionError } from "./auth-gate-session-error";
 
 type AuthGateMode = "require-auth" | "guest-only" | "require-admin";
 
@@ -23,7 +28,15 @@ export function AuthGate({ children, mode }: AuthGateProps) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const { isLoading, isAuthenticated, isAdmin, isSessionError } = useAuthGate();
+  const {
+    isLoading,
+    isAuthenticated,
+    isAdmin,
+    isAuthSessionError,
+    isTransientSessionError,
+    isUnclassifiedSessionError,
+    refetch,
+  } = useAuthGate();
   const query = searchParams.toString();
   const currentPath = query.length === 0 ? pathname : `${pathname}?${query}`;
 
@@ -36,8 +49,11 @@ export function AuthGate({ children, mode }: AuthGateProps) {
     currentPath,
   });
 
+  const shouldResetSession =
+    isAuthSessionError || (isUnclassifiedSessionError && needsAuth);
+
   useEffect(() => {
-    if (isSessionError) {
+    if (shouldResetSession) {
       resetSession(queryClient);
 
       if (needsAuth) {
@@ -50,9 +66,26 @@ export function AuthGate({ children, mode }: AuthGateProps) {
     if (redirectTo == null) return;
 
     router.replace(redirectTo);
-  }, [currentPath, isSessionError, needsAuth, redirectTo, queryClient, router]);
+  }, [
+    currentPath,
+    needsAuth,
+    redirectTo,
+    queryClient,
+    router,
+    shouldResetSession,
+  ]);
 
-  if (isLoading || redirectTo != null || (isSessionError && needsAuth)) {
+  if (isTransientSessionError) {
+    return (
+      <AuthGateSessionError
+        onRetry={() => {
+          void refetch();
+        }}
+      />
+    );
+  }
+
+  if (isLoading || redirectTo != null || (shouldResetSession && needsAuth)) {
     return <AuthGateLoader />;
   }
 

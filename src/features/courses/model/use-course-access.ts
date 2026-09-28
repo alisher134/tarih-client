@@ -11,9 +11,13 @@ export function useCourseAccess(slug: string) {
   return {
     course: courseQuery.data,
     canAccess: access.hasAccess,
+    isAccessDenied: access.isAccessDenied,
+    isAccessLoading: access.isLoading,
+    isAccessError: access.isError,
+    accessError: access.error,
     isLoading: courseQuery.isLoading || access.isLoading,
-    isError: courseQuery.isError || access.isError,
-    error: courseQuery.error ?? access.error,
+    isError: courseQuery.isError,
+    error: courseQuery.error,
     refetchCourse: courseQuery.refetch,
     refetchSubscription: access.refetchSubscription,
   };

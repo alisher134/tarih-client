@@ -10,7 +10,9 @@
     "browseCourses": "Смотреть курсы",
     "watched": "{watched} / {total}",
     "progress": "Прогресс",
-    "renewSubscription": "Оформить подписку"
+    "renewSubscription": "Продлить / купить подписку",
+    "noAccessTitle": "Подписка неактивна",
+    "noAccessDescription": "Продлите подписку, чтобы продолжить обучение. Прогресс сохранён и вернётся после оплаты."
   },
   "overview": {
     "title": "Статистика",

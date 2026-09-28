@@ -13,6 +13,10 @@
   "month": "ай",
   "expiresAt": "Жарамды мерзімі",
   "remainingDays": "Қалған күндер",
+  "checkingPayment": "Төлем тексерілуде…",
+  "paymentActivated": "Жазылым белсендірілді",
+  "paymentPending": "Төлем әлі расталмады. Төлеген болсаңыз, сәл күтіп қайта тексеріңіз.",
+  "checkPaymentAgain": "Қайта тексеру",
   "errors": {
     "loadFailed": "Жазылымды жүктеу мүмкін болмады",
     "purchaseLinkFailed": "Төлем сілтемесін алу мүмкін болмады"

@@ -9,15 +9,15 @@ Layers (top → bottom): `app/` → `src/_app` → `src/_pages` → `src/widgets
 
 **Import rule:** a module may import only from layers **below** it, never from above or sideways across slices at the same layer.
 
-| Layer | Responsibility | Examples |
-|-------|----------------|----------|
-| `app/` | Next.js routes, layouts, metadata | `app/[locale]/page.tsx` |
-| `_app` | App shell, providers, global i18n request | `main-layout.tsx`, `request.ts` |
-| `_pages` | Full page compositions | `home-page.tsx` |
-| `widgets` | Large independent UI blocks | `header`, `footer` |
-| `features` | User actions / business interactions | `change-language`, `change-region` |
-| `entities` | Business entities | `event`, `user` |
-| `shared` | UI kit, config, utils, i18n infra | `shared/ui`, `shared/config` |
+| Layer      | Responsibility                            | Examples                           |
+| ---------- | ----------------------------------------- | ---------------------------------- |
+| `app/`     | Next.js routes, layouts, metadata         | `app/[locale]/page.tsx`            |
+| `_app`     | App shell, providers, global i18n request | `main-layout.tsx`, `request.ts`    |
+| `_pages`   | Full page compositions                    | `home-page.tsx`                    |
+| `widgets`  | Large independent UI blocks               | `header`, `footer`                 |
+| `features` | User actions / business interactions      | `change-language`, `change-region` |
+| `entities` | Business entities                         | `event`, `user`                    |
+| `shared`   | UI kit, config, utils, i18n infra         | `shared/ui`, `shared/config`       |
 
 ## Import boundaries
 
@@ -96,15 +96,15 @@ export { ChangeLanguage } from "./ui/change-language";
 
 ## Where to put new code
 
-| Need | Place |
-|------|-------|
-| Reusable button, input | `shared/ui/` |
-| Locale config, routing | `shared/config/i18n/` |
+| Need                     | Place                       |
+| ------------------------ | --------------------------- |
+| Reusable button, input   | `shared/ui/`                |
+| Locale config, routing   | `shared/config/i18n/`       |
 | "Switch language" action | `features/change-language/` |
-| Site header block | `widgets/header/` |
-| Full home screen | `_pages/home/` |
-| App-wide layout | `_app/layouts/` |
-| Next.js route wiring | `app/[locale]/` |
+| Site header block        | `widgets/header/`           |
+| Full home screen         | `_pages/home/`              |
+| App-wide layout          | `_app/layouts/`             |
+| Next.js route wiring     | `app/[locale]/`             |
 
 ### BAD — dump everything in shared
 

@@ -25,7 +25,7 @@ Before creating a new primitive, check `shared/ui/`. Extend via variants, do not
 ```tsx
 import { Button } from "@/shared/ui/button";
 
-<Button type="submit">Submit</Button>
+<Button type="submit">Submit</Button>;
 ```
 
 ### GOOD — extend via CVA variants (like LinkButton)
@@ -34,7 +34,9 @@ import { Button } from "@/shared/ui/button";
 import { buttonVariants } from "@/shared/ui/button";
 import { cn } from "cn";
 
-<Link className={cn(buttonVariants({ variant: "ghost", size: "lg" }), className)} />
+<Link
+  className={cn(buttonVariants({ variant: "ghost", size: "lg" }), className)}
+/>;
 ```
 
 ## className merging
@@ -74,7 +76,7 @@ Use `Container` for page-width constraints.
 ```tsx
 import { Container } from "@/shared/ui/container";
 
-<Container>{children}</Container>
+<Container>{children}</Container>;
 ```
 
 ## Icons
@@ -95,7 +97,7 @@ import { Container } from "@/shared/ui/container";
 ```tsx
 import { ChevronDownIcon } from "lucide-react";
 
-<ChevronDownIcon className="size-4 text-muted-foreground" />
+<ChevronDownIcon className="size-4 text-muted-foreground" />;
 ```
 
 ### GOOD — SVGR for brand assets
@@ -103,10 +105,11 @@ import { ChevronDownIcon } from "lucide-react";
 ```tsx
 import LogoIcon from "@/shared/assets/icons/logo-icon.svg?react";
 
-<LogoIcon className="size-6" aria-hidden />
+<LogoIcon className="size-6" aria-hidden />;
 ```
 
 SVG imports:
+
 - `*.svg?react` → React component
 - `*.svg` → URL string (for `<img>` or `next/image`)
 
@@ -164,7 +167,7 @@ Use existing `Input`, `Textarea`, `InputGroup` from `shared/ui/`. Match field sp
 ```tsx
 import { Input } from "@/shared/ui/input";
 
-<Input type="email" placeholder={t("emailPlaceholder")} />
+<Input type="email" placeholder={t("emailPlaceholder")} />;
 ```
 
 ## Responsive and states

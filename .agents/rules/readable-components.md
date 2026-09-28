@@ -50,7 +50,11 @@ function SellerPage({ sellerId }: SellerPageProps) {
           ))}
         </div>
       </section>
-      <ContactModal seller={seller} open={isContactOpen} onClose={() => setIsContactOpen(false)} />
+      <ContactModal
+        seller={seller}
+        open={isContactOpen}
+        onClose={() => setIsContactOpen(false)}
+      />
     </main>
   );
 }
@@ -106,12 +110,22 @@ function ProductList({ products }: ProductListProps) {
 
 ```tsx
 function ProductList({ products }: ProductListProps) {
-  const { search, sort, visibleProducts, handleSearchChange, handleSortChange } =
-    useProductListFilters(products);
+  const {
+    search,
+    sort,
+    visibleProducts,
+    handleSearchChange,
+    handleSortChange,
+  } = useProductListFilters(products);
 
   return (
     <section>
-      <ProductFilters search={search} sort={sort} onSearchChange={handleSearchChange} onSortChange={handleSortChange} />
+      <ProductFilters
+        search={search}
+        sort={sort}
+        onSearchChange={handleSearchChange}
+        onSortChange={handleSortChange}
+      />
       <ProductGrid products={visibleProducts} />
     </section>
   );
@@ -125,8 +139,24 @@ function ProductList({ products }: ProductListProps) {
 ```tsx
 function OrderStatus({ order }: OrderStatusProps) {
   return (
-    <Tag color={order.cancelled ? "red" : order.paid && order.shipped ? "green" : order.paid ? "blue" : "orange"}>
-      {order.cancelled ? "Cancelled" : order.paid && order.shipped ? "Delivered" : order.paid ? "Paid" : "Pending"}
+    <Tag
+      color={
+        order.cancelled
+          ? "red"
+          : order.paid && order.shipped
+            ? "green"
+            : order.paid
+              ? "blue"
+              : "orange"
+      }
+    >
+      {order.cancelled
+        ? "Cancelled"
+        : order.paid && order.shipped
+          ? "Delivered"
+          : order.paid
+            ? "Paid"
+            : "Pending"}
     </Tag>
   );
 }
@@ -142,7 +172,8 @@ function OrderStatus({ order }: OrderStatusProps) {
 
 function getOrderStatus(order: Order): OrderStatusView {
   if (order.cancelled) return { color: "red", label: "Cancelled" };
-  if (order.paid && order.shipped) return { color: "green", label: "Delivered" };
+  if (order.paid && order.shipped)
+    return { color: "green", label: "Delivered" };
   if (order.paid) return { color: "blue", label: "Paid" };
   return { color: "orange", label: "Pending" };
 }
@@ -178,8 +209,10 @@ export async function Header() {
 }
 
 // change-language-list.tsx — Client Component (needs onClick + router)
-"use client";
-export function ChangeLanguageList({ currentLocale }: Props) { /* ... */ }
+("use client");
+export function ChangeLanguageList({ currentLocale }: Props) {
+  /* ... */
+}
 ```
 
 ## Props drilling vs composition
@@ -203,17 +236,19 @@ export function ChangeLanguageList({ currentLocale }: Props) { /* ... */ }
 ### BAD — duplicate markup branches
 
 ```tsx
-{isLoading ? (
-  <div className="flex flex-col gap-2">
-    <Skeleton className="h-4 w-full" />
-    <Skeleton className="h-4 w-3/4" />
-  </div>
-) : (
-  <div className="flex flex-col gap-2">
-    <h2>{event.title}</h2>
-    <p>{event.description}</p>
-  </div>
-)}
+{
+  isLoading ? (
+    <div className="flex flex-col gap-2">
+      <Skeleton className="h-4 w-full" />
+      <Skeleton className="h-4 w-3/4" />
+    </div>
+  ) : (
+    <div className="flex flex-col gap-2">
+      <h2>{event.title}</h2>
+      <p>{event.description}</p>
+    </div>
+  );
+}
 ```
 
 ### GOOD — extract variant or guard early
@@ -234,13 +269,17 @@ return (
 ### BAD — index as key for mutable lists
 
 ```tsx
-{items.map((item, index) => <Row key={index} item={item} />)}
+{
+  items.map((item, index) => <Row key={index} item={item} />);
+}
 ```
 
 ### GOOD — stable id
 
 ```tsx
-{localeOptions.map((item) => (
-  <Button key={item.code} /* ... */>{item.label}</Button>
-))}
+{
+  localeOptions.map((item) => (
+    <Button key={item.code} /* ... */>{item.label}</Button>
+  ));
+}
 ```

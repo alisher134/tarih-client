@@ -4,6 +4,10 @@ export type CourseStatus = (typeof COURSE_STATUSES)[number];
 
 export type CourseEnrollmentStatus = "ACTIVE" | "COMPLETED";
 
+export type MyCourseNextAction =
+  | { type: "LESSON"; lessonId: string }
+  | { type: "TEST"; lessonId: string; testId: string };
+
 export type MyCourseItemCourse = {
   id: string;
   title: string;
@@ -20,6 +24,7 @@ export type MyCourseItem = {
   lastActivityAt: string | null;
   completedAt: string | null;
   isStarted: boolean;
+  nextAction?: MyCourseNextAction | null;
 };
 
 export type LessonMaterialType =

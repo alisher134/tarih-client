@@ -48,6 +48,7 @@ export function TestIntro({ test, onStart, isStarting }: TestIntroProps) {
       </dl>
 
       <p className="text-sm text-muted-foreground">{t("rulesDescription")}</p>
+      <p className="text-sm text-muted-foreground">{t("refreshWarning")}</p>
 
       <Button
         type="button"

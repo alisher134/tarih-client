@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 
 import { useCourseAccess } from "@/features/courses";
+import { LearningAccessNotice } from "@/features/courses/ui/learning-access-notice";
 import type { StudentLessonTest, TestAttempt } from "@/entities/course";
 import { SubscriptionRequiredNotice } from "@/features/subscription";
 import {
@@ -69,7 +70,9 @@ export function TakeTest({ slug, lessonId }: TakeTestProps) {
     access.canAccess && testId.length > 0,
   );
   const startAttempt = useStartAttempt(testId);
-  const [startedAttempt, setStartedAttempt] = useState<TestAttempt | null>(null);
+  const [startedAttempt, setStartedAttempt] = useState<TestAttempt | null>(
+    null,
+  );
   const [result, setResult] = useState<TestAttempt | null>(null);
   const currentAttempt =
     result ??
@@ -169,9 +172,14 @@ export function TakeTest({ slug, lessonId }: TakeTestProps) {
         }
       >
         {(course) => (
-          <Show
-            when={access.canAccess}
-            fallback={<SubscriptionRequiredNotice />}
+          <LearningAccessNotice
+            isLoading={access.isAccessLoading}
+            isError={access.isAccessError}
+            isAccessDenied={access.isAccessDenied}
+            error={access.accessError}
+            onRetry={() => {
+              void access.refetchSubscription();
+            }}
           >
             <AsyncWrapper
               isLoading={testQuery.isLoading}
@@ -286,7 +294,7 @@ export function TakeTest({ slug, lessonId }: TakeTestProps) {
                 </div>
               )}
             </AsyncWrapper>
-          </Show>
+          </LearningAccessNotice>
         )}
       </AsyncWrapper>
     </div>

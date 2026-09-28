@@ -31,6 +31,7 @@ function getFeaturedPlanId(plans: SubscriptionPlan[]) {
 
 export function PricingPlans() {
   const t = useTranslations("home");
+  const tSubscription = useTranslations("subscription");
   const tErrors = useTranslations("errors");
   const { data, isLoading, isError, error } = useSubscriptionPlans();
   const featuredPlanId = data == null ? null : getFeaturedPlanId(data);
@@ -72,13 +73,14 @@ export function PricingPlans() {
                     featured={plan.id === featuredPlanId}
                     action={
                       <TelegramPurchaseButton
+                        planId={plan.id}
+                        planSlug={plan.slug}
                         className={cn(
                           buttonVariants({
-                            variant:
-                              plan.id === featuredPlanId ? "default" : "outline",
+                            variant: "default",
                             size: "default",
                           }),
-                          "w-full",
+                          "h-auto min-h-9 w-full whitespace-normal py-2 text-center leading-snug",
                         )}
                       >
                         {t("cta")}
@@ -89,12 +91,9 @@ export function PricingPlans() {
               ))}
             </ul>
 
-            <TelegramPurchaseButton
-              variant="link"
-              size="sm"
-              className="self-center h-auto p-0"
-              showInstructions
-            />
+            <p className="text-center text-sm text-muted-foreground">
+              {tSubscription("purchaseInstructions")}
+            </p>
           </div>
         </Show>
       )}

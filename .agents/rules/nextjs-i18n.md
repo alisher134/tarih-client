@@ -18,7 +18,7 @@ Always use i18n-aware navigation from `@/shared/config/i18n/navigation` — neve
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-<Link href="/login">Login</Link>
+<Link href="/login">Login</Link>;
 router.push("/events");
 ```
 
@@ -27,7 +27,7 @@ router.push("/events");
 ```tsx
 import { Link, useRouter, usePathname } from "@/shared/config/i18n/navigation";
 
-<Link href="/login">{t("login")}</Link>
+<Link href="/login">{t("login")}</Link>;
 router.replace(pathname, { locale: "ru" });
 ```
 
@@ -74,7 +74,11 @@ Route `params` and `searchParams` are Promises — always await.
 ### BAD
 
 ```tsx
-export default function LocaleLayout({ params }: { params: { locale: string } }) {
+export default function LocaleLayout({
+  params,
+}: {
+  params: { locale: string };
+}) {
   const { locale } = params;
 }
 ```
@@ -87,7 +91,10 @@ type LocaleLayoutProps = {
   params: Promise<{ locale: string }>;
 };
 
-export default async function LocaleLayout({ children, params }: LocaleLayoutProps) {
+export default async function LocaleLayout({
+  children,
+  params,
+}: LocaleLayoutProps) {
   const { locale } = await params;
 
   if (!hasLocale(routing.locales, locale)) {
@@ -100,10 +107,10 @@ export default async function LocaleLayout({ children, params }: LocaleLayoutPro
 
 ## Server vs client split
 
-| Need | Use |
-|------|-----|
-| `getTranslations`, `getLocale` | Server Component |
-| `onClick`, `useState`, `useEffect` | `"use client"` |
+| Need                                      | Use                                       |
+| ----------------------------------------- | ----------------------------------------- |
+| `getTranslations`, `getLocale`            | Server Component                          |
+| `onClick`, `useState`, `useEffect`        | `"use client"`                            |
 | Popover trigger with server-fetched label | Server wrapper + client interactive child |
 
 ### GOOD — matches project pattern
@@ -124,7 +131,7 @@ export async function ChangeLanguage() {
 }
 
 // change-language-list.tsx — client
-"use client";
+("use client");
 export function ChangeLanguageList({ currentLocale }: Props) {
   const router = useRouter();
   /* ... */

@@ -14,6 +14,13 @@ export {
   getLearningNextActionHref,
 } from "./lib/next-action";
 
+export {
+  flushLearningProgressInvalidation,
+  invalidateLearningProgressQueries,
+  scheduleLearningProgressInvalidation,
+} from "./lib/invalidate-learning-queries";
+
+export { useContinueLearning } from "./model/use-continue-learning";
 export { useCourseLearningSummary } from "./model/use-course-learning-summary";
 
 export {

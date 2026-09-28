@@ -161,6 +161,18 @@ const myCourseItemCourseSchema = z.object({
   order: z.number(),
 });
 
+const myCourseNextActionSchema = z.discriminatedUnion("type", [
+  z.object({
+    type: z.literal("LESSON"),
+    lessonId: z.string(),
+  }),
+  z.object({
+    type: z.literal("TEST"),
+    lessonId: z.string(),
+    testId: z.string(),
+  }),
+]);
+
 export const myCourseItemSchema = z.object({
   course: myCourseItemCourseSchema,
   progress: z.number(),
@@ -169,6 +181,7 @@ export const myCourseItemSchema = z.object({
   lastActivityAt: z.string().nullable(),
   completedAt: z.string().nullable(),
   isStarted: z.boolean(),
+  nextAction: myCourseNextActionSchema.nullable().optional(),
 });
 
 export const courseFavoriteSchema = z.object({

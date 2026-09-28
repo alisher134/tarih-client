@@ -2,10 +2,12 @@
 
 import { useTranslations } from "next-intl";
 
+import { LearningAccessNotice } from "@/features/courses/ui/learning-access-notice";
 import { SubscriptionRequiredNotice } from "@/features/subscription";
 import { getErrorMessage } from "@/shared/api";
 import { isSubscriptionRequiredError } from "@/shared/lib/is-subscription-required-error";
 import { AsyncWrapper } from "@/shared/ui/async-wrapper";
+import { Button } from "@/shared/ui/button";
 import { ErrorAlert } from "@/shared/ui/error-alert";
 import { ErrorPageElement } from "@/shared/ui/error-page-element";
 import { PageBreadcrumbs } from "@/shared/ui/page-breadcrumbs";
@@ -15,6 +17,7 @@ import { Show } from "@/shared/ui/show";
 import { useLessonMaterials } from "../model/use-lesson-materials";
 import { useLessonPage } from "../model/use-lesson-page";
 import { useLessonProgress } from "../model/use-lesson-progress";
+import { useSerializedLessonProgress } from "../model/use-serialized-lesson-progress";
 import { LessonMaterials } from "./lesson-materials";
 import { LessonPlayback } from "./lesson-playback";
 import { LessonPlayerActions } from "./lesson-player-actions";
@@ -30,9 +33,15 @@ export function LessonPlayer({ slug, lessonId }: LessonPlayerProps) {
   const tSidebar = useTranslations("dashboardSidebar");
   const lessonPage = useLessonPage(slug, lessonId);
   const progressQuery = useLessonProgress(lessonId, lessonPage.canAccess);
+  const { saveProgress, flushProgress, saveError, retryLastSave } =
+    useSerializedLessonProgress(lessonId);
   const materialsQuery = useLessonMaterials(lessonId, {
     enabled: lessonPage.canAccess,
   });
+  const lessonProgress =
+    progressQuery.isError || progressQuery.isLoading
+      ? null
+      : (progressQuery.data ?? null);
 
   return (
     <AsyncWrapper
@@ -56,9 +65,14 @@ export function LessonPlayer({ slug, lessonId }: LessonPlayerProps) {
       }
     >
       {(currentLesson) => (
-        <Show
-          when={lessonPage.canAccess}
-          fallback={<SubscriptionRequiredNotice />}
+        <LearningAccessNotice
+          isLoading={lessonPage.isAccessLoading}
+          isError={lessonPage.isAccessError}
+          isAccessDenied={lessonPage.isAccessDenied}
+          error={lessonPage.accessError}
+          onRetry={() => {
+            lessonPage.refetchSubscription();
+          }}
         >
           <div className="flex flex-col gap-6">
             <PageBreadcrumbs
@@ -77,17 +91,56 @@ export function LessonPlayer({ slug, lessonId }: LessonPlayerProps) {
 
             <div className="flex flex-col gap-2">
               <PageTitle>{currentLesson.title}</PageTitle>
-              <Show when={progressQuery.data?.completed === true}>
+              <Show when={lessonProgress?.completed === true}>
                 <p className="text-sm text-muted-foreground">
                   {t("completed")}
                 </p>
+              </Show>
+              <Show when={progressQuery.isError}>
+                <div className="flex flex-col gap-2">
+                  <ErrorAlert
+                    errorMessage={getErrorMessage(
+                      progressQuery.error,
+                      t("errors.progressFailed"),
+                    )}
+                  />
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    className="self-start"
+                    onClick={() => {
+                      void progressQuery.refetch();
+                    }}
+                  >
+                    {tCourses("retry")}
+                  </Button>
+                </div>
+              </Show>
+              <Show when={saveError != null}>
+                <div className="flex flex-col gap-2">
+                  <ErrorAlert errorMessage={saveError!} />
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    className="self-start"
+                    onClick={() => {
+                      retryLastSave();
+                    }}
+                  >
+                    {tCourses("retry")}
+                  </Button>
+                </div>
               </Show>
             </div>
 
             <LessonPlayback
               lessonId={lessonId}
               canAccess={lessonPage.canAccess}
-              progress={progressQuery.data ?? null}
+              progress={lessonProgress}
+              saveProgress={saveProgress}
+              flushProgress={flushProgress}
             />
 
             <Show
@@ -125,10 +178,10 @@ export function LessonPlayer({ slug, lessonId }: LessonPlayerProps) {
               slug={slug}
               currentLesson={currentLesson}
               nextLesson={lessonPage.nextLesson}
-              isLessonCompleted={progressQuery.data?.completed === true}
+              isLessonCompleted={lessonProgress?.completed === true}
             />
           </div>
-        </Show>
+        </LearningAccessNotice>
       )}
     </AsyncWrapper>
   );

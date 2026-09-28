@@ -21,13 +21,16 @@ type CourseLessonsProps = {
   slug: string;
   lessons: StudentCourseLesson[];
   canAccess: boolean;
+  isAccessLoading?: boolean;
 };
 
 export function CourseLessons({
   slug,
   lessons,
   canAccess,
+  isAccessLoading = false,
 }: CourseLessonsProps) {
+  const canOpenLessons = canAccess && !isAccessLoading;
   const t = useTranslations("courses");
   const sortedLessons = [...lessons].sort(
     (left, right) => left.order - right.order,
@@ -35,7 +38,9 @@ export function CourseLessons({
 
   return (
     <section className="flex flex-col gap-3">
-      <SectionHeading description={canAccess ? t("freeOrderHint") : undefined}>
+      <SectionHeading
+        description={canOpenLessons ? t("freeOrderHint") : undefined}
+      >
         {t("curriculum")}
       </SectionHeading>
 
@@ -55,7 +60,7 @@ export function CourseLessons({
                   aria-hidden
                 />
               }
-              canOpen={canAccess}
+              canOpen={canOpenLessons}
               href={`/dashboard/courses/${slug}/lessons/${lesson.id}`}
               lockedLabel={t("locked")}
             />
@@ -70,7 +75,7 @@ export function CourseLessons({
                     aria-hidden
                   />
                 }
-                canOpen={canAccess}
+                canOpen={canOpenLessons}
                 href={`/dashboard/courses/${slug}/lessons/${lesson.id}/test`}
                 lockedLabel={t("locked")}
                 className="border-t border-border bg-muted/20 pl-10"

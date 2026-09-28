@@ -5,17 +5,17 @@ alwaysApply: true
 
 # Declarative UI
 
-Describe *what* is on screen. Do not branch with `if` / `&&` / ternaries in page or widget JSX for loading, error, empty, or optional data. Use the primitives in `shared/ui`. Do not invent new wrappers (`DataGuard`, `QueryBoundary`, …).
+Describe _what_ is on screen. Do not branch with `if` / `&&` / ternaries in page or widget JSX for loading, error, empty, or optional data. Use the primitives in `shared/ui`. Do not invent new wrappers (`DataGuard`, `QueryBoundary`, …).
 
-| Need | Use |
-|---|---|
-| loading + error + data | `AsyncWrapper` |
-| only loading | `LoaderGate` |
-| only error (replace children) | `ErrorGate` |
-| boolean / optional data | `Show` |
-| empty list / no content | `EmptyState` (as `Show` fallback) |
-| inline error | `ErrorAlert` |
-| full-page error | `ErrorPageElement` |
+| Need                          | Use                               |
+| ----------------------------- | --------------------------------- |
+| loading + error + data        | `AsyncWrapper`                    |
+| only loading                  | `LoaderGate`                      |
+| only error (replace children) | `ErrorGate`                       |
+| boolean / optional data       | `Show`                            |
+| empty list / no content       | `EmptyState` (as `Show` fallback) |
+| inline error                  | `ErrorAlert`                      |
+| full-page error               | `ErrorPageElement`                |
 
 Import from the file, not a made-up barrel: `@/shared/ui/async-wrapper`, `loader-gate`, `error-gate`, `show`, `empty-state`, `error-alert`, `error-page-element`, `spinner`.
 
@@ -36,7 +36,15 @@ return <EventDetails event={event} />;
 ### BAD — ternary / &&
 
 ```tsx
-{isLoading ? <Spinner /> : isError ? <ErrorAlert /> : event && <EventDetails event={event} />}
+{
+  isLoading ? (
+    <Spinner />
+  ) : isError ? (
+    <ErrorAlert />
+  ) : (
+    event && <EventDetails event={event} />
+  );
+}
 ```
 
 ### BAD — stack gates on a query that has data
@@ -167,8 +175,12 @@ Use `Show` instead of `&&`, ternaries, and early returns for visibility. Use the
 ### BAD
 
 ```tsx
-{user && <Avatar name={user.name} />}
-{isModalOpen ? <EventModal /> : null}
+{
+  user && <Avatar name={user.name} />;
+}
+{
+  isModalOpen ? <EventModal /> : null;
+}
 ```
 
 ### GOOD — flag
@@ -206,11 +218,13 @@ When a list or block has no data (after a successful fetch), use `EmptyState` as
 ### BAD — plain text or ad-hoc empty UI
 
 ```tsx
-{items.length === 0 ? (
-  <p className="text-sm text-muted-foreground">{t("empty")}</p>
-) : (
-  <EventList events={items} />
-)}
+{
+  items.length === 0 ? (
+    <p className="text-sm text-muted-foreground">{t("empty")}</p>
+  ) : (
+    <EventList events={items} />
+  );
+}
 ```
 
 ```tsx
@@ -244,10 +258,7 @@ When a list or block has no data (after a successful fetch), use `EmptyState` as
 Title-only is fine when there is nothing useful to add:
 
 ```tsx
-<Show
-  when={items.length > 0}
-  fallback={<EmptyState title={t("empty")} />}
->
+<Show when={items.length > 0} fallback={<EmptyState title={t("empty")} />}>
   <AdminUsersTable users={items} />
 </Show>
 ```

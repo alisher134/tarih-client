@@ -3,6 +3,7 @@ import { isAxiosError, type InternalAxiosRequestConfig } from "axios";
 
 import { apiClient } from "@/shared/api";
 import { getApiErrorCode } from "@/shared/lib/api-error";
+import { buildSignInLocationFromBrowser } from "@/shared/lib/build-sign-in-location";
 
 import { refreshSession } from "../api/refresh-session";
 import { resetSession } from "./apply-session";
@@ -52,8 +53,7 @@ export function setupSessionClient(queryClient: QueryClient) {
       }
 
       const originalRequest = error.config as
-        | RetryableRequestConfig
-        | undefined;
+        RetryableRequestConfig | undefined;
 
       if (!originalRequest || isPublicAuthRequest(originalRequest)) {
         return Promise.reject(error);
@@ -91,7 +91,7 @@ function redirectToSignIn() {
   const signInPath = "/sign-in";
   if (window.location.pathname.endsWith(signInPath)) return;
 
-  window.location.assign(signInPath);
+  window.location.assign(buildSignInLocationFromBrowser());
 }
 
 function isPublicAuthRequest(config: InternalAxiosRequestConfig) {

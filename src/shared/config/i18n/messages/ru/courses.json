@@ -7,6 +7,7 @@
   "searchPlaceholder": "Название курса",
   "details": "Подробнее",
   "continue": "Продолжить",
+  "openCourse": "Открыть курс",
   "watchLesson": "Смотреть урок",
   "takeTest": "Пройти тест",
   "courseCompleted": "Курс завершён",
@@ -46,6 +47,8 @@
   "errors": {
     "loadFailed": "Не удалось загрузить курсы",
     "courseLoadFailed": "Не удалось загрузить курс",
+    "subscriptionLoadFailed": "Не удалось проверить подписку",
+    "learningSummaryLoadFailed": "Не удалось загрузить прогресс курса",
     "favoriteFailed": "Не удалось обновить избранное"
   }
 }

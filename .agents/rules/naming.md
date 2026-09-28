@@ -101,9 +101,7 @@ function ChangeLanguageList({ currentLocale }: Props) {
   };
 
   return (
-    <Button onClick={() => handleLocaleChange(item.code)}>
-      {item.label}
-    </Button>
+    <Button onClick={() => handleLocaleChange(item.code)}>{item.label}</Button>
   );
 }
 ```

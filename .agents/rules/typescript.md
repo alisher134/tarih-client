@@ -94,7 +94,11 @@ export const localeOptions = [
 export const localeOptions = [
   { code: "kz", label: "Қазақша", shortLabel: "Қаз" },
   { code: "ru", label: "Русский", shortLabel: "Рус" },
-] as const satisfies readonly { code: Locale; label: string; shortLabel: string }[];
+] as const satisfies readonly {
+  code: Locale;
+  label: string;
+  shortLabel: string;
+}[];
 ```
 
 ## Props typing

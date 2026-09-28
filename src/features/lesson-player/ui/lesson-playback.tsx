@@ -4,6 +4,10 @@ import { useTranslations } from "next-intl";
 
 import { SubscriptionRequiredNotice } from "@/features/subscription";
 import { getErrorMessage } from "@/shared/api";
+import type {
+  UpdateLessonProgressInput,
+  UserLessonProgress,
+} from "@/entities/course";
 import { isSubscriptionRequiredError } from "@/shared/lib/is-subscription-required-error";
 import { AsyncWrapper } from "@/shared/ui/async-wrapper";
 import { ErrorAlert } from "@/shared/ui/error-alert";
@@ -14,13 +18,17 @@ import { LessonVideo } from "./lesson-video";
 type LessonPlaybackProps = {
   lessonId: string;
   canAccess: boolean;
-  progress: import("@/entities/course").UserLessonProgress | null;
+  progress: UserLessonProgress | null;
+  saveProgress: (input: UpdateLessonProgressInput) => void;
+  flushProgress: (input: UpdateLessonProgressInput) => Promise<unknown>;
 };
 
 export function LessonPlayback({
   lessonId,
   canAccess,
   progress,
+  saveProgress,
+  flushProgress,
 }: LessonPlaybackProps) {
   const t = useTranslations("lessonPlayer");
   const playbackQuery = usePlaybackUrl(lessonId, canAccess);
@@ -57,9 +65,10 @@ export function LessonPlayback({
     >
       {(playback) => (
         <LessonVideo
-          lessonId={lessonId}
           src={playback.downloadUrl}
           progress={progress}
+          saveProgress={saveProgress}
+          flushProgress={flushProgress}
         />
       )}
     </AsyncWrapper>

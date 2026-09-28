@@ -4,9 +4,10 @@ import { useEffect, useRef, type RefObject } from "react";
 
 import type { APITypes } from "plyr-react";
 
-import type { UserLessonProgress } from "@/entities/course";
-
-import { useSerializedLessonProgress } from "./use-serialized-lesson-progress";
+import type {
+  UpdateLessonProgressInput,
+  UserLessonProgress,
+} from "@/entities/course";
 
 const SAVE_INTERVAL_SECONDS = 5;
 
@@ -20,14 +21,18 @@ function getPlyrInstance(ref: RefObject<APITypes | null>) {
   return plyr;
 }
 
+type UseLessonVideoProgressOptions = {
+  saveProgress: (input: UpdateLessonProgressInput) => void;
+  flushProgress: (input: UpdateLessonProgressInput) => Promise<unknown>;
+};
+
 export function useLessonVideoProgress(
   playerRef: RefObject<APITypes | null>,
-  lessonId: string,
   src: string,
   progress: UserLessonProgress | null,
+  { saveProgress, flushProgress }: UseLessonVideoProgressOptions,
 ) {
   const lastSavedRef = useRef(0);
-  const { saveProgress, flushProgress } = useSerializedLessonProgress(lessonId);
 
   useEffect(() => {
     lastSavedRef.current = progress?.watchedSeconds ?? 0;
@@ -90,7 +95,10 @@ export function useLessonVideoProgress(
         plyr.off("loadedmetadata", handleLoadedMetadata);
         plyr.off("timeupdate", handleTimeUpdate);
         plyr.off("ended", handleEnded);
-        document.removeEventListener("visibilitychange", handleVisibilityChange);
+        document.removeEventListener(
+          "visibilitychange",
+          handleVisibilityChange,
+        );
         window.removeEventListener("pagehide", handlePageHide);
       };
     };

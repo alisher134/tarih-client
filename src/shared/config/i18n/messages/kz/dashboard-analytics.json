@@ -10,7 +10,9 @@
     "browseCourses": "Курстарды қарау",
     "watched": "{watched} / {total}",
     "progress": "Прогресс",
-    "renewSubscription": "Жазылым рәсімдеу"
+    "renewSubscription": "Жазылымды ұзарту / сатып алу",
+    "noAccessTitle": "Жазылым белсенді емес",
+    "noAccessDescription": "Оқуды жалғастыру үшін жазылымды ұзартыңыз. Прогресс сақталған, төлемнен кейін қайта ашылады."
   },
   "overview": {
     "title": "Статистика",
