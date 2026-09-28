@@ -27,9 +27,9 @@ steps:
       script:
         - cd /root/tarih/tarih-client # Замените на реальный путь
         # Скачиваем ТОЛЬКО обновленный образ
-        - docker-compose -f docker-compose.prod.yml pull client
+        - docker compose -f docker-compose.prod.yml pull client
         # Перезапускаем контейнер
-        - docker-compose -f docker-compose.prod.yml up -d client
+        - docker compose -f docker-compose.prod.yml up -d client
         - echo "Tarih Client успешно задеплоен по Варианту 2!"
 
 trigger:
