@@ -12,6 +12,8 @@ steps:
       username: alisher134
       password:
         from_secret: GH_PACKAGES_TOKEN
+      build_args:
+        - NEXT_PUBLIC_API_URL=https://api.tarih-edu.kz/api/v1
       dockerfile: Dockerfile
 
   - name: deploy-to-server
