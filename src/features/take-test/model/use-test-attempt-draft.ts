@@ -10,6 +10,32 @@ import { toTestAnswers, type AnswerMap } from "../lib/answers";
 
 const SAVE_DEBOUNCE_MS = 1500;
 
+function getLocalDraft(attemptId: string) {
+  try {
+    const data = localStorage.getItem(`tarih_test_draft_${attemptId}`);
+    if (data) {
+      return JSON.parse(data) as { questionId: string; optionIds: string[] }[];
+    }
+  } catch {
+    // ignore
+  }
+  return null;
+}
+
+function saveLocalDraft(
+  attemptId: string,
+  answers: { questionId: string; optionIds: string[] }[],
+) {
+  try {
+    localStorage.setItem(
+      `tarih_test_draft_${attemptId}`,
+      JSON.stringify(answers),
+    );
+  } catch {
+    // ignore
+  }
+}
+
 type UseTestAttemptDraftOptions = {
   attemptId: string;
   enabled: boolean;
@@ -51,23 +77,42 @@ export function useTestAttemptDraft({
     mutationFn: () => saveTestAttemptDraft(attemptId, toTestAnswers(answers)),
   });
 
-  const isDraftSupported = Array.isArray(draftQuery.data);
-  const isDraftUnsupported =
-    draftQuery.isFetched && draftQuery.data === null && !draftQuery.isError;
+  const isDraftUnsupported = false; // With localStorage fallback, it's always supported locally
 
   useEffect(() => {
     hasHydratedRef.current = false;
   }, [attemptId]);
 
   useEffect(() => {
-    if (!enabled || !isDraftSupported || hasHydratedRef.current) return;
+    // Wait for the query to finish (either success or error) before hydrating
+    if (!enabled || draftQuery.isPending || hasHydratedRef.current) return;
 
     hasHydratedRef.current = true;
-    onHydrate(mergeDraftAnswers(answers, draftQuery.data!));
-  }, [answers, draftQuery.data, enabled, isDraftSupported, onHydrate]);
+
+    const backendDraft = Array.isArray(draftQuery.data) ? draftQuery.data : [];
+    const localDraft = getLocalDraft(attemptId) ?? [];
+
+    // Merge backend first, then local (local takes precedence if offline saved)
+    const withBackend = mergeDraftAnswers(answers, backendDraft);
+    const fullyMerged = mergeDraftAnswers(withBackend, localDraft);
+
+    onHydrate(fullyMerged);
+  }, [
+    answers,
+    draftQuery.data,
+    draftQuery.isPending,
+    enabled,
+    attemptId,
+    onHydrate,
+  ]);
 
   useEffect(() => {
-    if (!enabled || !isDraftSupported || draftQuery.isLoading) return;
+    if (!enabled || !hasHydratedRef.current) return;
+    saveLocalDraft(attemptId, toTestAnswers(answers));
+  }, [answers, attemptId, enabled]);
+
+  useEffect(() => {
+    if (!enabled || draftQuery.isPending) return;
 
     if (debounceRef.current != null) {
       window.clearTimeout(debounceRef.current);
@@ -82,13 +127,7 @@ export function useTestAttemptDraft({
         window.clearTimeout(debounceRef.current);
       }
     };
-  }, [
-    answers,
-    draftQuery.isLoading,
-    enabled,
-    isDraftSupported,
-    saveDraftMutation,
-  ]);
+  }, [answers, attemptId, draftQuery.isPending, enabled, saveDraftMutation]);
 
   return {
     isDraftLoading: draftQuery.isLoading,

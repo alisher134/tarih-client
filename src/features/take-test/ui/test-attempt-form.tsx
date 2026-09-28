@@ -1,14 +1,24 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useState, useEffect } from "react";
 
 import { useTranslations } from "next-intl";
 
 import type { StudentLessonTest, TestAttempt } from "@/entities/course";
 import { getLocalizedApiErrorMessage, isApiErrorCode } from "@/shared/api";
+import { useRouter } from "@/shared/config/i18n/navigation";
 import { Button } from "@/shared/ui/button";
 import { EmptyState } from "@/shared/ui/empty-state";
 import { ErrorAlert } from "@/shared/ui/error-alert";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/shared/ui/dialog";
 import { Show } from "@/shared/ui/show";
 
 import {
@@ -47,6 +57,8 @@ export function TestAttemptForm({
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [isExpired, setIsExpired] = useState(false);
   const [hasTimedOut, setHasTimedOut] = useState(false);
+  const [pendingNavHref, setPendingNavHref] = useState<string | null>(null);
+  const router = useRouter();
   const sortedQuestions = [...test.questions].sort(
     (left, right) => left.order - right.order,
   );
@@ -54,6 +66,42 @@ export function TestAttemptForm({
   const handleHydrateDraft = useCallback((draftAnswers: AnswerMap) => {
     setAnswers(draftAnswers);
   }, []);
+
+  useEffect(() => {
+    if (isPending || isExpired || hasTimedOut || sortedQuestions.length === 0)
+      return;
+
+    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+      event.preventDefault();
+      event.returnValue = "";
+    };
+
+    const handleClick = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      const anchor = target.closest("a");
+
+      // Check if it's an internal link
+      if (
+        anchor &&
+        anchor.href &&
+        !anchor.target &&
+        anchor.href.startsWith(window.location.origin)
+      ) {
+        event.preventDefault();
+        event.stopPropagation();
+        setPendingNavHref(anchor.href);
+      }
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    // Use capture phase to catch the event before next/link does
+    window.addEventListener("click", handleClick, true);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+      window.removeEventListener("click", handleClick, true);
+    };
+  }, [hasTimedOut, isExpired, isPending, sortedQuestions.length, t]);
 
   const { isDraftUnsupported } = useTestAttemptDraft({
     attemptId: attempt.id,
@@ -191,6 +239,39 @@ export function TestAttemptForm({
           {t("submit")}
         </Button>
       </Show>
+
+      <Dialog
+        open={pendingNavHref != null}
+        onOpenChange={(open) => {
+          if (!open) setPendingNavHref(null);
+        }}
+      >
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>
+              {t("confirmLeaveTitle") ?? "Предупреждение"}
+            </DialogTitle>
+            <DialogDescription>{t("confirmLeave")}</DialogDescription>
+          </DialogHeader>
+
+          <DialogFooter>
+            <DialogClose render={<Button variant="outline" />}>
+              {t("cancelLeave") ?? "Остаться"}
+            </DialogClose>
+            <Button
+              type="button"
+              variant="default"
+              onClick={() => {
+                if (pendingNavHref) {
+                  router.push(pendingNavHref);
+                }
+              }}
+            >
+              {t("confirmLeaveAction") ?? "Покинуть страницу"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

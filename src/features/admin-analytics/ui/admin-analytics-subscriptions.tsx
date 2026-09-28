@@ -60,16 +60,22 @@ export function AdminAnalyticsSubscriptionsSection() {
             </div>
 
             <Show when={subscriptionsAnalytics.byPlan.length > 0}>
-              <div className="rounded-xl border p-4">
-                <p className="mb-3 font-medium">{t("subscriptions.byPlan")}</p>
-                <ul className="flex flex-col gap-2">
+              <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
+                <p className="mb-4 text-sm font-medium text-muted-foreground">
+                  {t("subscriptions.byPlan")}
+                </p>
+                <ul className="flex flex-col divide-y">
                   {subscriptionsAnalytics.byPlan.map((item) => (
                     <li
                       key={item.plan.id}
-                      className="flex items-center justify-between text-sm"
+                      className="flex items-center justify-between py-2 text-sm first:pt-0 last:pb-0"
                     >
-                      <span>{item.plan.title ?? item.plan.slug ?? item.plan.id}</span>
-                      <span className="font-medium">{item.count}</span>
+                      <span className="font-medium">
+                        {item.plan.title ?? item.plan.slug ?? item.plan.id}
+                      </span>
+                      <span className="rounded-full bg-muted/50 px-2.5 py-0.5 font-semibold">
+                        {item.count}
+                      </span>
                     </li>
                   ))}
                 </ul>
@@ -89,9 +95,16 @@ type SubscriptionStatProps = {
 
 function SubscriptionStat({ label, value }: SubscriptionStatProps) {
   return (
-    <div className="rounded-xl border p-4">
-      <p className="text-sm text-muted-foreground">{label}</p>
-      <p className="mt-1 text-2xl font-semibold">{value}</p>
+    <div className="group relative flex flex-col justify-center gap-1 overflow-hidden rounded-2xl border border-border bg-card p-5 shadow-sm transition-all hover:-translate-y-1 hover:shadow-md">
+      <div
+        className="absolute -right-4 -top-4 size-20 rounded-full bg-primary/5 transition-transform duration-500 ease-out group-hover:scale-[2.5]"
+        aria-hidden
+      />
+
+      <p className="relative z-10 text-sm font-medium text-muted-foreground">
+        {label}
+      </p>
+      <p className="relative z-10 text-3xl font-bold tracking-tight">{value}</p>
     </div>
   );
 }

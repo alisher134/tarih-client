@@ -22,7 +22,7 @@ export function TestQuestion({
 
   return (
     <fieldset
-      className="flex flex-col gap-3 rounded-xl border border-border p-4"
+      className="flex flex-col gap-4 rounded-xl border border-border/70 bg-card p-5 shadow-xs"
       disabled={disabled}
     >
       <legend className="px-1 text-base font-semibold">{question.text}</legend>
@@ -30,13 +30,13 @@ export function TestQuestion({
       <ul className="flex flex-col gap-2">
         {sortedOptions.map((option) => (
           <li key={option.id}>
-            <label className="flex items-center gap-3 rounded-lg px-2 py-1.5 hover:bg-muted/50">
+            <label className="flex cursor-pointer items-center gap-3 rounded-lg border border-transparent px-3 py-2.5 transition-colors hover:border-primary/20 hover:bg-primary/5">
               <input
                 type={inputType}
                 name={question.id}
                 checked={selectedIds.includes(option.id)}
                 onChange={() => onToggle(option.id)}
-                className="size-4 accent-primary"
+                className="size-4 cursor-pointer accent-primary"
               />
               <span>{option.text}</span>
             </label>

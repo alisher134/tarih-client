@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { TelegramPurchaseButton } from "@/features/subscription";
 import { useLearningAccess } from "@/features/courses";
 import { getLocalizedApiErrorMessage } from "@/shared/api";
+import { SUBSCRIPTION_PLANS_HREF } from "@/shared/config/routes";
 import { AsyncWrapper } from "@/shared/ui/async-wrapper";
 import { Button } from "@/shared/ui/button";
 import { EmptyState } from "@/shared/ui/empty-state";
@@ -13,9 +14,6 @@ import { LinkButton } from "@/shared/ui/link-button";
 import { LoaderGate } from "@/shared/ui/loader-gate";
 import { Show } from "@/shared/ui/show";
 
-import { useContinueLearning } from "@/entities/learning";
-
-import { getMyCourseCardAction } from "../lib/get-my-course-card-action";
 import { useMyEnrollments } from "../model/use-my-enrollments";
 import { CourseCard } from "./course-card";
 
@@ -24,9 +22,6 @@ export function MyCoursesList() {
   const tErrors = useTranslations("errors");
   const enrollmentsQuery = useMyEnrollments();
   const access = useLearningAccess();
-  const continueQuery = useContinueLearning({
-    enabled: access.hasAccess && !access.isLoading,
-  });
 
   return (
     <div className="flex flex-col gap-4">
@@ -110,18 +105,15 @@ export function MyCoursesList() {
                       ? t("completedBadge")
                       : undefined
                     : t("notStarted");
-                  const action = getMyCourseCardAction(
-                    item,
-                    continueQuery.data,
-                    access.hasAccess,
-                  );
+                  const href = access.hasAccess
+                    ? `/dashboard/courses/${course.slug}`
+                    : SUBSCRIPTION_PLANS_HREF;
 
                   return (
                     <CourseCard
                       key={course.id}
                       course={course}
-                      actionHref={action.href}
-                      actionLabel={t(action.labelKey)}
+                      href={href}
                       meta={meta}
                       progress={progress}
                     />

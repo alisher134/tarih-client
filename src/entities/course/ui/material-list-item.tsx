@@ -18,11 +18,8 @@ export function MaterialListItem({
   action,
 }: MaterialListItemProps) {
   return (
-    <li className="flex items-center gap-3 px-4 py-3">
-      <FileTextIcon
-        className="size-4 shrink-0 text-muted-foreground"
-        aria-hidden
-      />
+    <div className="flex items-center gap-4 rounded-xl border border-border/70 bg-card p-4 shadow-xs transition-colors hover:border-primary/40">
+      <FileTextIcon className="size-5 shrink-0 text-primary/60" aria-hidden />
       <div className="min-w-0 flex-1">
         <p className="truncate font-medium">{title}</p>
         <p className="text-xs text-muted-foreground">
@@ -30,6 +27,6 @@ export function MaterialListItem({
         </p>
       </div>
       {action}
-    </li>
+    </div>
   );
 }

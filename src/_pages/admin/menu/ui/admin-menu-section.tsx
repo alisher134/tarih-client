@@ -12,7 +12,12 @@ export function AdminMenuSection({
   className,
 }: AdminMenuSectionProps) {
   return (
-    <div className={cn("rounded-xl border border-border bg-card", className)}>
+    <div
+      className={cn(
+        "rounded-xl border border-border/70 bg-card shadow-xs",
+        className,
+      )}
+    >
       {children}
     </div>
   );

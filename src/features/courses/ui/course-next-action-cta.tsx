@@ -1,5 +1,6 @@
 "use client";
 
+import { cn } from "cn";
 import { useTranslations } from "next-intl";
 
 import type { CourseEnrollmentStatus } from "@/entities/course";
@@ -23,6 +24,7 @@ type CourseNextActionCtaProps = {
   isError: boolean;
   error: unknown;
   onRetry: () => void;
+  className?: string;
 };
 
 export function CourseNextActionCta({
@@ -34,13 +36,19 @@ export function CourseNextActionCta({
   isError,
   error,
   onRetry,
+  className,
 }: CourseNextActionCtaProps) {
   const t = useTranslations("courses");
   const tErrors = useTranslations("errors");
 
   if (isLoading) {
     return (
-      <Button type="button" size="sm" disabled>
+      <Button
+        type="button"
+        size="default"
+        disabled
+        className={cn("w-full", className)}
+      >
         …
       </Button>
     );
@@ -48,7 +56,7 @@ export function CourseNextActionCta({
 
   if (isError) {
     return (
-      <div className="flex flex-col gap-2 md:items-end">
+      <div className={cn("flex flex-col gap-2", className)}>
         <ErrorAlert
           errorMessage={getLocalizedApiErrorMessage(
             error,
@@ -60,7 +68,7 @@ export function CourseNextActionCta({
           type="button"
           variant="outline"
           size="sm"
-          className="self-start md:self-end"
+          className="self-start"
           onClick={() => {
             onRetry();
           }}
@@ -76,13 +84,19 @@ export function CourseNextActionCta({
   if (nextAction == null) {
     if (enrollmentStatus === "COMPLETED") {
       return (
-        <LinkButton href={`/dashboard/courses/${courseSlug}`} size="sm">
+        <LinkButton
+          href={`/dashboard/courses/${courseSlug}`}
+          size="default"
+          className={cn("w-full", className)}
+        >
           {t("openCourse")}
         </LinkButton>
       );
     }
 
-    return <p className="text-sm font-medium">{t("courseCompleted")}</p>;
+    return (
+      <p className="text-center text-sm font-medium">{t("courseCompleted")}</p>
+    );
   }
 
   return (
@@ -92,7 +106,8 @@ export function CourseNextActionCta({
           ? getLearningNextActionHref(courseSlug, nextAction)
           : SUBSCRIPTION_PLANS_HREF
       }
-      size="sm"
+      size="default"
+      className={cn("w-full", className)}
     >
       {canAccess ? t(getCourseNextActionLabelKey(nextAction)) : t("viewPlans")}
     </LinkButton>

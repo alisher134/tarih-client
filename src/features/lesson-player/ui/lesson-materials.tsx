@@ -60,7 +60,7 @@ export function LessonMaterials({ materials }: LessonMaterialsProps) {
         when={sortedMaterials.length > 0}
         fallback={<EmptyState title={t("noMaterials")} />}
       >
-        <ul className="divide-y divide-border rounded-xl border border-border">
+        <div className="flex flex-col gap-3">
           {sortedMaterials.map((material) => (
             <MaterialListItem
               key={material.id}
@@ -80,7 +80,7 @@ export function LessonMaterials({ materials }: LessonMaterialsProps) {
               }
             />
           ))}
-        </ul>
+        </div>
       </Show>
     </section>
   );

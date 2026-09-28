@@ -6,6 +6,7 @@ const withNextIntl = createNextIntlPlugin("./src/_app/i18n/request.ts");
 const API_ORIGIN = process.env.API_ORIGIN ?? "http://localhost:8080";
 
 const nextConfig: NextConfig = {
+  output: "standalone",
   reactCompiler: true,
   async rewrites() {
     return [

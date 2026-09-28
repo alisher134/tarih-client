@@ -14,15 +14,19 @@ export function AnalyticsStatCard({
   detail,
 }: AnalyticsStatCardProps) {
   return (
-    <div className="flex flex-col gap-2 rounded-xl border p-4">
-      <div className="flex items-center gap-2 text-muted-foreground">
-        <Icon className="size-4" aria-hidden />
-        <p className="text-sm">{label}</p>
+    <div className="group flex flex-col gap-3 rounded-2xl border border-border bg-card p-5 shadow-sm transition-all hover:-translate-y-1 hover:shadow-md">
+      <div className="flex items-center justify-between">
+        <p className="text-sm font-medium text-muted-foreground">{label}</p>
+        <div className="flex size-10 items-center justify-center rounded-xl bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+          <Icon className="size-5" aria-hidden />
+        </div>
       </div>
-      <p className="text-2xl font-semibold">{value}</p>
-      {detail != null ? (
-        <p className="text-sm text-muted-foreground">{detail}</p>
-      ) : null}
+      <div>
+        <p className="text-3xl font-bold tracking-tight">{value}</p>
+        {detail != null ? (
+          <p className="mt-1 text-xs text-muted-foreground">{detail}</p>
+        ) : null}
+      </div>
     </div>
   );
 }

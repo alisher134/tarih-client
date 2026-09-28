@@ -41,13 +41,17 @@ export function AdminUsersTable({ users }: AdminUsersTableProps) {
             <TableCell>{user.firstName}</TableCell>
             <TableCell>{user.lastName}</TableCell>
             <TableCell>
-              <span className="rounded-md bg-muted px-2 py-0.5 text-xs">
+              <span className="rounded-full bg-muted/80 px-2.5 py-0.5 text-xs font-medium text-foreground">
                 {user.isAdmin ? t("admin") : t("user")}
               </span>
             </TableCell>
             <TableCell>{formatDateTime(user.createdAt, locale)}</TableCell>
             <TableCell>
-              <LinkButton href={`/admin/users/${user.id}`} variant="outline">
+              <LinkButton
+                href={`/admin/users/${user.id}`}
+                variant="outline"
+                size="sm"
+              >
                 {t("open")}
               </LinkButton>
             </TableCell>

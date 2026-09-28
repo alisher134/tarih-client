@@ -53,13 +53,14 @@ export function AdminCourseLessons({
 
       <Show
         when={sortedLessons.length > 0}
-        fallback={
-          <EmptyState title={t("emptyLessons")} />
-        }
+        fallback={<EmptyState title={t("emptyLessons")} />}
       >
-        <ul className="divide-y divide-border rounded-xl border border-border">
+        <div className="flex flex-col gap-3">
           {sortedLessons.map((lesson) => (
-            <li key={lesson.id} className="flex items-center gap-3 px-3 py-2.5">
+            <div
+              key={lesson.id}
+              className="flex items-center gap-4 rounded-xl border border-border/70 bg-card px-4 py-3 shadow-xs transition-colors hover:border-primary/40"
+            >
               <span className="min-w-0 flex-1 truncate font-medium">
                 {lesson.title}
               </span>
@@ -89,9 +90,9 @@ export function AdminCourseLessons({
                   </Button>
                 }
               />
-            </li>
+            </div>
           ))}
-        </ul>
+        </div>
       </Show>
 
       <CreateLessonDialog

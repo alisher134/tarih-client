@@ -12,11 +12,13 @@ import { useToggleFavorite } from "../model/use-toggle-favorite";
 type FavoriteCourseButtonProps = {
   courseId: string;
   isFavorite: boolean;
+  className?: string;
 };
 
 export function FavoriteCourseButton({
   courseId,
   isFavorite,
+  className,
 }: FavoriteCourseButtonProps) {
   const t = useTranslations("courses");
   const { mutate, isPending } = useToggleFavorite();
@@ -45,6 +47,7 @@ export function FavoriteCourseButton({
       onClick={handleToggle}
       aria-pressed={isFavorite}
       aria-label={isFavorite ? t("favoriteRemove") : t("favoriteAdd")}
+      className={className}
     >
       <HeartIcon
         className={isFavorite ? "fill-primary text-primary" : undefined}

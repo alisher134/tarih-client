@@ -44,9 +44,12 @@ export function CourseLessons({
         {t("curriculum")}
       </SectionHeading>
 
-      <ul className="divide-y divide-border rounded-xl border border-border">
+      <div className="flex flex-col gap-3">
         {sortedLessons.map((lesson) => (
-          <li key={lesson.id}>
+          <div
+            key={lesson.id}
+            className="group/lesson overflow-hidden rounded-xl border border-border/70 bg-card shadow-xs transition-all duration-300 hover:border-primary/40 hover:shadow-md"
+          >
             <CurriculumRow
               title={lesson.title}
               meta={
@@ -54,36 +57,28 @@ export function CourseLessons({
                   ? formatDuration(lesson.videoDuration)
                   : null
               }
-              icon={
-                <PlayCircleIcon
-                  className="size-4 shrink-0 text-muted-foreground"
-                  aria-hidden
-                />
-              }
+              icon={<PlayCircleIcon className="size-4.5" aria-hidden />}
               canOpen={canOpenLessons}
               href={`/dashboard/courses/${slug}/lessons/${lesson.id}`}
               lockedLabel={t("locked")}
+              isTest={false}
             />
 
             <Show when={lesson.hasTest === true && lesson.testId != null}>
               <CurriculumRow
                 title={t("test")}
                 meta={null}
-                icon={
-                  <ClipboardListIcon
-                    className="size-4 shrink-0 text-muted-foreground"
-                    aria-hidden
-                  />
-                }
+                icon={<ClipboardListIcon className="size-4.5" aria-hidden />}
                 canOpen={canOpenLessons}
                 href={`/dashboard/courses/${slug}/lessons/${lesson.id}/test`}
                 lockedLabel={t("locked")}
-                className="border-t border-border bg-muted/20 pl-10"
+                isTest={true}
+                className="relative border-t border-border/50 bg-muted/10 before:absolute before:left-0 before:top-0 before:h-full before:w-[3px] before:bg-primary/30"
               />
             </Show>
-          </li>
+          </div>
         ))}
-      </ul>
+      </div>
     </section>
   );
 }
@@ -96,6 +91,7 @@ type CurriculumRowProps = {
   href: string;
   lockedLabel: string;
   className?: string;
+  isTest?: boolean;
 };
 
 function CurriculumRow({
@@ -106,20 +102,46 @@ function CurriculumRow({
   href,
   lockedLabel,
   className,
+  isTest = false,
 }: CurriculumRowProps) {
   const content = (
     <>
-      {icon}
-      <span className="min-w-0 flex-1 font-medium">{title}</span>
+      <div
+        className={cn(
+          "flex size-9 shrink-0 items-center justify-center rounded-full transition-colors",
+          canOpen
+            ? isTest
+              ? "bg-primary/10 text-primary group-hover:bg-primary/20"
+              : "bg-muted/60 text-muted-foreground group-hover:bg-primary/10 group-hover:text-primary"
+            : "bg-muted/50 text-muted-foreground/50",
+        )}
+      >
+        {icon}
+      </div>
+      <span
+        className={cn(
+          "min-w-0 flex-1 font-medium transition-colors",
+          canOpen ? "group-hover:text-foreground" : "text-muted-foreground",
+        )}
+      >
+        {title}
+      </span>
       <Show when={meta != null}>
-        <span className="text-sm text-muted-foreground">{meta}</span>
+        <span className="text-sm font-medium text-muted-foreground">
+          {meta}
+        </span>
       </Show>
       <Show
         when={canOpen}
-        fallback={<LockIcon className="size-4 shrink-0" aria-hidden />}
+        fallback={
+          <LockIcon
+            className="size-4 shrink-0 text-muted-foreground/50"
+            aria-hidden
+          />
+        }
       >
         <ChevronRightIcon
-          className="size-4 shrink-0 text-muted-foreground"
+          className="size-4 shrink-0 text-muted-foreground/70 transition-transform duration-300 group-hover:translate-x-1 group-hover:text-foreground"
           aria-hidden
         />
       </Show>
@@ -129,10 +151,7 @@ function CurriculumRow({
   if (!canOpen) {
     return (
       <div
-        className={cn(
-          "flex items-center gap-3 px-4 py-3 text-muted-foreground",
-          className,
-        )}
+        className={cn("group flex items-center gap-4 px-5 py-3.5", className)}
         title={lockedLabel}
       >
         {content}
@@ -144,7 +163,7 @@ function CurriculumRow({
     <Link
       href={href}
       className={cn(
-        "flex items-center gap-3 px-4 py-3 hover:bg-muted/50",
+        "group flex items-center gap-4 px-5 py-3.5 transition-colors hover:bg-muted/40",
         className,
       )}
     >

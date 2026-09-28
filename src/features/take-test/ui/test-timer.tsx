@@ -1,9 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-
-import { useTranslations } from "next-intl";
-
+import { cn } from "cn";
 import { formatDuration } from "@/shared/lib/format-duration";
 
 type TestTimerProps = {
@@ -13,7 +11,6 @@ type TestTimerProps = {
 };
 
 export function TestTimer({ startedAt, timeLimit, onExpire }: TestTimerProps) {
-  const t = useTranslations("takeTest");
   const endsAt = new Date(startedAt).getTime() + timeLimit * 1000;
   const onExpireRef = useRef(onExpire);
   const hasExpiredRef = useRef(false);
@@ -41,9 +38,58 @@ export function TestTimer({ startedAt, timeLimit, onExpire }: TestTimerProps) {
     return () => window.clearTimeout(timeoutId);
   }, [secondsLeft]);
 
+  const progress = Math.max(0, Math.min(100, (secondsLeft / timeLimit) * 100));
+  const isLowTime = secondsLeft < 60 && timeLimit > 60;
+
+  // SVG parameters
+  const size = 90;
+  const strokeWidth = 8;
+  const radius = (size - strokeWidth) / 2;
+  const circumference = radius * 2 * Math.PI;
+  const strokeDashoffset = circumference - (progress / 100) * circumference;
+
   return (
-    <p className="text-sm font-medium text-muted-foreground">
-      {t("timeLeft", { time: formatDuration(secondsLeft) })}
-    </p>
+    <div className="fixed bottom-6 right-6 sm:bottom-10 sm:right-10 z-50 flex items-center justify-center rounded-full bg-card p-1 shadow-2xl transition-transform hover:scale-105">
+      <svg
+        width={size}
+        height={size}
+        className={cn("-rotate-90 transform", isLowTime && "animate-pulse")}
+      >
+        <circle
+          cx={size / 2}
+          cy={size / 2}
+          r={radius}
+          fill="transparent"
+          stroke="currentColor"
+          className={cn("text-primary/10", isLowTime && "text-destructive/20")}
+          strokeWidth={strokeWidth}
+        />
+        <circle
+          cx={size / 2}
+          cy={size / 2}
+          r={radius}
+          fill="transparent"
+          stroke="currentColor"
+          className={cn(
+            "transition-all duration-1000 ease-linear text-primary",
+            isLowTime && "text-destructive",
+          )}
+          strokeWidth={strokeWidth}
+          strokeDasharray={circumference}
+          strokeDashoffset={strokeDashoffset}
+          strokeLinecap="round"
+        />
+      </svg>
+      <div className="absolute flex flex-col items-center justify-center">
+        <span
+          className={cn(
+            "text-base font-bold tabular-nums tracking-tight",
+            isLowTime ? "text-destructive" : "text-foreground",
+          )}
+        >
+          {formatDuration(secondsLeft)}
+        </span>
+      </div>
+    </div>
   );
 }

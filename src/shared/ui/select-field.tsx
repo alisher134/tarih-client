@@ -28,7 +28,7 @@ export function SelectField({
         <select
           id={id}
           className={cn(
-            "h-8 w-full min-w-0 appearance-none rounded-lg border border-input bg-transparent py-1 pr-8 pl-2.5 text-base outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm dark:bg-input/30",
+            "h-10 w-full min-w-0 appearance-none rounded-xl border border-input bg-transparent py-2 pr-8 pl-3 text-base outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm dark:bg-input/30",
             className,
           )}
           aria-invalid={error ? true : undefined}

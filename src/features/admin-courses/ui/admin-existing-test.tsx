@@ -34,7 +34,7 @@ export function AdminExistingTest({ courseId, test }: AdminExistingTestProps) {
     });
 
   return (
-    <div className="flex flex-wrap items-center gap-3 rounded-xl border border-border p-4">
+    <div className="flex flex-wrap items-center gap-4 rounded-xl border border-border/70 bg-card p-5 shadow-xs">
       <div className="min-w-0 flex-1">
         <p className="font-medium">{test.title}</p>
         <p className="text-sm text-muted-foreground">
