@@ -1,0 +1,93 @@
+import type { PlyrOptions } from "plyr-react";
+
+import type { Locale } from "@/shared/config/i18n/routing";
+
+type PlyrI18n = NonNullable<PlyrOptions["i18n"]>;
+
+const plyrI18nRu = {
+  restart: "Начать сначала",
+  rewind: "Назад {seektime} сек",
+  play: "Воспроизвести",
+  pause: "Пауза",
+  fastForward: "Вперёд {seektime} сек",
+  seek: "Перемотка",
+  seekLabel: "{currentTime} из {duration}",
+  played: "Просмотрено",
+  buffered: "Буфер",
+  currentTime: "Текущее время",
+  duration: "Длительность",
+  volume: "Громкость",
+  mute: "Без звука",
+  unmute: "Со звуком",
+  enterFullscreen: "Полный экран",
+  exitFullscreen: "Выйти из полного экрана",
+  frameTitle: "Видеоплеер {title}",
+  settings: "Настройки",
+  pip: "Картинка в картинке",
+  menuBack: "Назад",
+  speed: "Скорость",
+  normal: "Обычная",
+  quality: "Качество",
+  loop: "Повтор",
+  start: "Начало",
+  end: "Конец",
+  all: "Все",
+  reset: "Сброс",
+  disabled: "Выключено",
+  enabled: "Включено",
+  advertisement: "Реклама",
+  qualityBadge: {
+    2160: "4K",
+    1440: "HD",
+    1080: "HD",
+    720: "HD",
+    576: "SD",
+    480: "SD",
+  },
+} satisfies PlyrI18n;
+
+const plyrI18nKz = {
+  restart: "Бастан қайта ойнату",
+  rewind: "Артқа {seektime} сек",
+  play: "Ойнату",
+  pause: "Кідірту",
+  fastForward: "Алға {seektime} сек",
+  seek: "Айналдыру",
+  seekLabel: "{currentTime} / {duration}",
+  played: "Көрілді",
+  buffered: "Буфер",
+  currentTime: "Ағымдағы уақыт",
+  duration: "Ұзақтығы",
+  volume: "Дыбыс",
+  mute: "Дыбысты өшіру",
+  unmute: "Дыбысты қосу",
+  enterFullscreen: "Толық экран",
+  exitFullscreen: "Толық экраннан шығу",
+  frameTitle: "Бейнеплеер {title}",
+  settings: "Баптаулар",
+  pip: "Сурет ішінде сурет",
+  menuBack: "Артқа",
+  speed: "Жылдамдық",
+  normal: "Қалыпты",
+  quality: "Сапа",
+  loop: "Қайталау",
+  start: "Басталуы",
+  end: "Соңы",
+  all: "Барлығы",
+  reset: "Тастау",
+  disabled: "Өшірілген",
+  enabled: "Қосылған",
+  advertisement: "Жарнама",
+  qualityBadge: {
+    2160: "4K",
+    1440: "HD",
+    1080: "HD",
+    720: "HD",
+    576: "SD",
+    480: "SD",
+  },
+} satisfies PlyrI18n;
+
+export function getPlyrI18n(locale: Locale): PlyrI18n {
+  return locale === "ru" ? plyrI18nRu : plyrI18nKz;
+}

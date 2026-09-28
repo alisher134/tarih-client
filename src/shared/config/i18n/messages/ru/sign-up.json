@@ -1,0 +1,31 @@
+{
+  "title": "Регистрация",
+  "email": "Email",
+  "emailPlaceholder": "email@example.com",
+  "firstName": "Имя",
+  "firstNamePlaceholder": "Введите имя",
+  "lastName": "Фамилия",
+  "lastNamePlaceholder": "Введите фамилию",
+  "password": "Пароль",
+  "passwordPlaceholder": "Придумайте пароль",
+  "confirmPassword": "Повторите пароль",
+  "confirmPasswordPlaceholder": "Повторите пароль",
+  "submit": "Зарегистрироваться",
+  "success": "Аккаунт создан",
+  "hasAccount": "Уже есть аккаунт?",
+  "signIn": "Вход",
+  "showPassword": "Показать пароль",
+  "hidePassword": "Скрыть пароль",
+  "errors": {
+    "emailRequired": "Введите email",
+    "emailInvalid": "Введите корректный email",
+    "firstNameRequired": "Введите имя",
+    "firstNameMax": "Имя не длиннее 100 символов",
+    "lastNameRequired": "Введите фамилию",
+    "lastNameMax": "Фамилия не длиннее 100 символов",
+    "passwordRequired": "Введите пароль",
+    "confirmPasswordRequired": "Повторите пароль",
+    "passwordMismatch": "*Пароли не совпадают",
+    "requestFailed": "Не удалось зарегистрироваться"
+  }
+}

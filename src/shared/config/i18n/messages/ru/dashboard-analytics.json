@@ -1,0 +1,36 @@
+{
+  "title": "Главная",
+  "continueLesson": "Продолжить урок",
+  "continueTest": "Пройти тест",
+  "continue": {
+    "title": "Продолжить",
+    "description": "Последний урок или тест",
+    "emptyTitle": "Нечего продолжать",
+    "empty": "Пока нет прогресса обучения. Начните с каталога курсов.",
+    "browseCourses": "Смотреть курсы",
+    "watched": "{watched} / {total}",
+    "progress": "Прогресс",
+    "renewSubscription": "Продлить / купить подписку",
+    "noAccessTitle": "Подписка неактивна",
+    "noAccessDescription": "Продлите подписку, чтобы продолжить обучение. Прогресс сохранён и вернётся после оплаты."
+  },
+  "overview": {
+    "title": "Статистика",
+    "description": "Сводка за последние 30 дней",
+    "courses": "Курсы",
+    "coursesTotal": "{total} всего",
+    "lessonsCompleted": "Завершённые уроки",
+    "watchTime": "Время просмотра",
+    "streak": "Серия",
+    "streakDays": "дн.",
+    "tests": "Тесты",
+    "testsDetails": "Сдано: {passed}, успех: {passRate}, средний: {averageScore}",
+    "subscription": "Подписка",
+    "subscriptionInactive": "Нет активной подписки",
+    "viewPlans": "Смотреть тарифы",
+    "subscriptionDetails": "Осталось {days} дн., {price} / мес."
+  },
+  "errors": {
+    "loadFailed": "Не удалось загрузить данные"
+  }
+}

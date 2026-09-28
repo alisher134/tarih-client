@@ -1,0 +1,24 @@
+{
+  "title": "Подписка",
+  "description": "Текущий тариф и срок доступа",
+  "inactiveTitle": "Нет активной подписки",
+  "inactive": "Оформите подписку через Telegram-бот, чтобы получить доступ ко всем курсам и материалам.",
+  "viewPlans": "Посмотреть тарифы",
+  "renewViaTelegram": "Продлить в Telegram",
+  "purchaseInTelegram": "Оформить в Telegram",
+  "purchaseInstructions": "Оплата и загрузка чека — только в Telegram-боте.",
+  "upcomingStartsAt": "Подписка начнётся с {date}",
+  "upcomingRenewal": "Следующее продление с {date}",
+  "statusActive": "Активна",
+  "month": "мес",
+  "expiresAt": "Действует до",
+  "remainingDays": "Осталось дней",
+  "checkingPayment": "Проверяем оплату…",
+  "paymentActivated": "Подписка активирована",
+  "paymentPending": "Оплата ещё не подтверждена. Если вы уже оплатили, подождите немного и проверьте снова.",
+  "checkPaymentAgain": "Проверить снова",
+  "errors": {
+    "loadFailed": "Не удалось загрузить подписку",
+    "purchaseLinkFailed": "Не удалось получить ссылку на оплату"
+  }
+}

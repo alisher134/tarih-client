@@ -1,0 +1,24 @@
+{
+  "title": "Жазылым",
+  "description": "Ағымдағы тариф және қолжетімділік мерзімі",
+  "inactiveTitle": "Белсенді жазылым жоқ",
+  "inactive": "Барлық курстар мен материалдарға қол жеткізу үшін Telegram-бот арқылы жазылым рәсімдеңіз.",
+  "viewPlans": "Тарифтерді көру",
+  "renewViaTelegram": "Telegram арқылы ұзарту",
+  "purchaseInTelegram": "Telegram арқылы рәсімдеу",
+  "purchaseInstructions": "Төлем мен чекті тек Telegram-бот арқылы жіберуге болады.",
+  "upcomingStartsAt": "Жазылым {date} басталады",
+  "upcomingRenewal": "Келесі ұзарту {date} басталады",
+  "statusActive": "Белсенді",
+  "month": "ай",
+  "expiresAt": "Жарамды мерзімі",
+  "remainingDays": "Қалған күндер",
+  "checkingPayment": "Төлем тексерілуде…",
+  "paymentActivated": "Жазылым белсендірілді",
+  "paymentPending": "Төлем әлі расталмады. Төлеген болсаңыз, сәл күтіп қайта тексеріңіз.",
+  "checkPaymentAgain": "Қайта тексеру",
+  "errors": {
+    "loadFailed": "Жазылымды жүктеу мүмкін болмады",
+    "purchaseLinkFailed": "Төлем сілтемесін алу мүмкін болмады"
+  }
+}

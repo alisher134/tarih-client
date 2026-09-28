@@ -1,0 +1,14 @@
+{
+  "title": "Жеке деректер",
+  "lastName": "Тегі",
+  "lastNamePlaceholder": "Тегін енгізіңіз",
+  "firstName": "Аты",
+  "firstNamePlaceholder": "Атын енгізіңіз",
+  "save": "Сақтау",
+  "success": "Деректер сақталды",
+  "errors": {
+    "lastNameRequired": "Тегін енгізіңіз",
+    "firstNameRequired": "Атын енгізіңіз",
+    "requestFailed": "Деректерді сақтау мүмкін болмады"
+  }
+}

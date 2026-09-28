@@ -1,0 +1,20 @@
+{
+  "title": "Вход",
+  "email": "Email",
+  "emailPlaceholder": "email@example.com",
+  "password": "Пароль",
+  "passwordPlaceholder": "Введите пароль",
+  "forgotPassword": "Забыли пароль?",
+  "submit": "Войти",
+  "success": "Вы вошли",
+  "noAccount": "Нет аккаунта?",
+  "signUp": "Регистрация",
+  "showPassword": "Показать пароль",
+  "hidePassword": "Скрыть пароль",
+  "errors": {
+    "emailRequired": "Введите email",
+    "emailInvalid": "Введите корректный email",
+    "passwordRequired": "Введите пароль",
+    "requestFailed": "Не удалось войти"
+  }
+}

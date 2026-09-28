@@ -1,0 +1,17 @@
+{
+  "courseFallback": "Курс",
+  "nextLesson": "Следующий урок",
+  "materials": "Материалы к уроку",
+  "noMaterials": "Материалов нет",
+  "takeTest": "Пройти тест",
+  "completed": "Урок пройден",
+  "download": "Скачать",
+  "noVideo": "Видео пока недоступно",
+  "errors": {
+    "loadFailed": "Не удалось открыть урок",
+    "playbackFailed": "Не удалось загрузить видео",
+    "downloadFailed": "Не удалось скачать материал",
+    "materialsLoadFailed": "Не удалось загрузить материалы",
+    "progressFailed": "Не удалось сохранить прогресс"
+  }
+}

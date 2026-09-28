@@ -1,0 +1,28 @@
+{
+  "title": "Жазылымдар",
+  "description": "Пайдаланушыға жазылым беру және оның тарихы",
+  "grant": "Жазылым беру",
+  "grantTitle": "Жазылым беру",
+  "grantConfirm": "Беру",
+  "plan": "Тариф",
+  "cancel": "Бас тарту",
+  "empty": "Жазылымдар әзірше жоқ",
+  "startsAt": "Басталуы",
+  "expiresAt": "Аяқталуы",
+  "remainingDays": "Қалған күндер",
+  "cancelAction": "Жазылымды тоқтату",
+  "cancelTitle": "Жазылымды тоқтату",
+  "cancelDescription": "Ағымдағы белсенді жазылым тоқтатылады.",
+  "cancelConfirm": "Тоқтату",
+  "cancelDismiss": "Жабу",
+  "successGrant": "Жазылым берілді",
+  "status": {
+    "ACTIVE": "Белсенді",
+    "CANCELLED": "Тоқтатылған",
+    "EXPIRED": "Мерзімі өткен"
+  },
+  "errors": {
+    "loadFailed": "Жазылымдарды жүктеу мүмкін болмады",
+    "grantFailed": "Жазылым беру мүмкін болмады"
+  }
+}

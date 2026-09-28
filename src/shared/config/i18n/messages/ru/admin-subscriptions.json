@@ -1,0 +1,28 @@
+{
+  "title": "Подписки",
+  "description": "Выдача и история подписок пользователя",
+  "grant": "Выдать подписку",
+  "grantTitle": "Выдать подписку",
+  "grantConfirm": "Выдать",
+  "plan": "Тариф",
+  "cancel": "Отмена",
+  "empty": "Подписок пока нет",
+  "startsAt": "Начало",
+  "expiresAt": "Окончание",
+  "remainingDays": "Осталось дней",
+  "cancelAction": "Отменить подписку",
+  "cancelTitle": "Отменить подписку",
+  "cancelDescription": "Текущая активная подписка будет отменена.",
+  "cancelConfirm": "Отменить",
+  "cancelDismiss": "Закрыть",
+  "successGrant": "Подписка выдана",
+  "status": {
+    "ACTIVE": "Активна",
+    "CANCELLED": "Отменена",
+    "EXPIRED": "Истекла"
+  },
+  "errors": {
+    "loadFailed": "Не удалось загрузить подписки",
+    "grantFailed": "Не удалось выдать подписку"
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "overview": {
+    "title": "Обзор",
+    "description": "Аналитика за последние 30 дней",
+    "newUsers": "Новые пользователи",
+    "activeUsers": "Активные пользователи",
+    "enrollments": "Записи",
+    "enrollmentsCompleted": "{count} завершено",
+    "tests": "Тесты",
+    "testsPassRate": "Успех {passRate}"
+  },
+  "subscriptions": {
+    "title": "Подписки",
+    "description": "Статистика подписок",
+    "active": "Активные",
+    "expiring7Days": "Истекают за 7 дней",
+    "expiring30Days": "Истекают за 30 дней",
+    "grantedInPeriod": "Выдано за период",
+    "cancelled": "Отменены",
+    "expired": "Истекли",
+    "byPlan": "По тарифам"
+  },
+  "courses": {
+    "title": "Курсы",
+    "description": "Аналитика по курсам",
+    "course": "Курс",
+    "completed": "Завершено",
+    "progress": "Средний прогресс",
+    "testPassRate": "Успех тестов",
+    "open": "Открыть",
+    "empty": "Курсы не найдены"
+  },
+  "errors": {
+    "loadFailed": "Не удалось загрузить данные"
+  }
+}

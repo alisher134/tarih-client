@@ -1,0 +1,14 @@
+{
+  "title": "Личные данные",
+  "lastName": "Фамилия",
+  "lastNamePlaceholder": "Введите фамилию",
+  "firstName": "Имя",
+  "firstNamePlaceholder": "Введите имя",
+  "save": "Сохранить",
+  "success": "Данные сохранены",
+  "errors": {
+    "lastNameRequired": "Введите фамилию",
+    "firstNameRequired": "Введите имя",
+    "requestFailed": "Не удалось сохранить данные"
+  }
+}
