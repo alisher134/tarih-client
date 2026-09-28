@@ -1,8 +1,6 @@
 services:
   client:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: ghcr.io/alisher134/tarih-client:latest
     container_name: tarih-client
     restart: unless-stopped
     ports:
