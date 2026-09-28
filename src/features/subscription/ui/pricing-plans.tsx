@@ -71,6 +71,7 @@ export function PricingPlans() {
                     perMonthLabel={t("perMonth")}
                     priceNote={t("priceNote")}
                     featured={plan.id === featuredPlanId}
+                    featuredLabel={t("popularLabel")}
                     action={
                       <TelegramPurchaseButton
                         planId={plan.id}

@@ -12,32 +12,37 @@ export async function PricingSection() {
   const t = await getTranslations("home");
 
   return (
-    <section className="mx-auto max-w-5xl" id="pricing">
-      <div className="space-y-10 rounded-xl border bg-card p-6 md:p-10">
+    <section className="mx-auto max-w-5xl space-y-12" id="pricing">
+      <div className="flex flex-col items-center space-y-10 rounded-3xl border bg-card/50 p-8 shadow-sm backdrop-blur-sm md:p-12">
         <SectionHeader
-          align="left"
+          align="center"
           label={t("pricingLabel")}
           title={t("title")}
           description={t("description")}
         />
 
-        <Card className="border bg-muted/40">
-          <CardContent className="flex flex-col items-center gap-3 py-4 sm:flex-row sm:justify-center sm:gap-0">
+        <Card className="w-full max-w-3xl overflow-hidden border bg-gradient-to-br from-muted/50 to-muted/20 shadow-inner">
+          <CardContent className="flex flex-col items-center justify-between gap-4 py-5 sm:flex-row sm:gap-0 sm:px-10">
             {accessItems.map((item, index) => (
-              <div key={item} className="flex items-center gap-3 sm:gap-0">
+              <div
+                key={item}
+                className="flex items-center gap-4 text-muted-foreground sm:gap-0"
+              >
                 {index > 0 ? (
                   <Separator
                     orientation="vertical"
-                    className="hidden h-4 sm:mx-5 sm:block"
+                    className="hidden h-5 sm:mx-8 sm:block"
                   />
                 ) : null}
-                <span className="text-sm">{t(item)}</span>
+                <span className="font-medium text-foreground">{t(item)}</span>
               </div>
             ))}
           </CardContent>
         </Card>
 
-        <PricingPlans />
+        <div className="w-full pt-4">
+          <PricingPlans />
+        </div>
       </div>
     </section>
   );

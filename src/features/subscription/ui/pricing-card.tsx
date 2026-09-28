@@ -18,6 +18,7 @@ type PricingCardProps = {
   priceNote: string;
   action: ReactNode;
   featured?: boolean;
+  featuredLabel?: string;
 };
 
 export function PricingCard({
@@ -29,39 +30,53 @@ export function PricingCard({
   priceNote,
   action,
   featured = false,
+  featuredLabel = "Popular",
 }: PricingCardProps) {
   return (
     <Card
       className={cn(
-        "h-full border transition-colors hover:border-primary/40",
-        featured && "border-primary ring-1 ring-primary/15",
+        "relative flex h-full flex-col overflow-hidden rounded-2xl border transition-all duration-300 hover:-translate-y-1 hover:shadow-lg",
+        featured
+          ? "border-primary bg-primary/5 shadow-md ring-1 ring-primary/20"
+          : "bg-card hover:border-primary/30",
       )}
     >
-      <CardHeader className="border-b pb-(--card-spacing)">
-        <CardTitle className="flex items-baseline gap-1.5">
-          <span className="font-heading text-3xl font-medium tracking-tight">
-            {months}
-          </span>
-          <span className="text-sm font-normal text-muted-foreground">
-            {period}
-          </span>
+      {featured && (
+        <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-primary/60 via-primary to-primary/60" />
+      )}
+
+      <CardHeader className="pb-6 pt-8 text-center">
+        {featured && (
+          <div className="absolute right-4 top-4 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
+            {featuredLabel}
+          </div>
+        )}
+        <CardTitle className="flex flex-col items-center gap-2">
+          <div className="flex items-baseline gap-1.5 text-primary">
+            <span className="font-heading text-5xl font-bold tracking-tight">
+              {months}
+            </span>
+            <span className="text-lg font-medium">{period}</span>
+          </div>
         </CardTitle>
       </CardHeader>
 
-      <CardContent className="flex flex-1 flex-col justify-center gap-1 py-6">
-        <p className="font-heading text-2xl font-medium tracking-tight">
-          {price}
-        </p>
-        <p className="text-xs text-muted-foreground">{priceNote}</p>
-        <p className="mt-3 text-sm text-muted-foreground">
-          {pricePerMonth}{" "}
-          <span className="text-foreground/70">{perMonthLabel}</span>
-        </p>
+      <CardContent className="flex flex-1 flex-col items-center justify-center gap-1 pb-8 text-center">
+        <div className="space-y-1">
+          <p className="font-heading text-3xl font-bold tracking-tight text-foreground">
+            {price}
+          </p>
+          <p className="text-sm font-medium text-muted-foreground">
+            {priceNote}
+          </p>
+        </div>
+        <div className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-muted/50 px-4 py-1.5 text-sm">
+          <span className="font-semibold text-foreground">{pricePerMonth}</span>
+          <span className="text-muted-foreground">{perMonthLabel}</span>
+        </div>
       </CardContent>
 
-      <CardFooter className="w-full border-t pt-(--card-spacing)">
-        {action}
-      </CardFooter>
+      <CardFooter className="w-full pb-8 pt-0">{action}</CardFooter>
     </Card>
   );
 }
