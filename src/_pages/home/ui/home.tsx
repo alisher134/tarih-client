@@ -6,6 +6,7 @@ import { FaqSection } from "./faq-section";
 import { HeroSection } from "./hero-section";
 import { HowItWorksSection } from "./how-it-works-section";
 import { PricingSection } from "./pricing-section";
+import { SneakPeekSection } from "./sneak-peek-section";
 
 export function Home() {
   return (
@@ -19,6 +20,9 @@ export function Home() {
         </AnimatedSection>
         <AnimatedSection delay={0.2}>
           <HowItWorksSection />
+        </AnimatedSection>
+        <AnimatedSection delay={0.2}>
+          <SneakPeekSection />
         </AnimatedSection>
         <AnimatedSection delay={0.2}>
           <CtaSection />
