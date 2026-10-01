@@ -1,7 +1,8 @@
 export type SubscriptionPlan = {
   id: string;
   slug: string;
-  title: string;
+  titleRu: string;
+  titleKz?: string;
   durationMonths: number;
   priceKzt: number;
 };

@@ -4,10 +4,7 @@ import { useState } from "react";
 
 import { useTranslations } from "next-intl";
 
-import {
-  formatPriceKzt,
-  type SubscriptionPlan,
-} from "@/entities/subscription";
+import { formatPriceKzt, type SubscriptionPlan } from "@/entities/subscription";
 import { getErrorMessage } from "@/shared/api";
 import { Button } from "@/shared/ui/button";
 import {
@@ -73,7 +70,11 @@ export function GrantSubscriptionDialog({
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger
         render={
-          <Button type="button" variant="outline" disabled={plans.length === 0} />
+          <Button
+            type="button"
+            variant="outline"
+            disabled={plans.length === 0}
+          />
         }
       >
         {t("grant")}
@@ -91,7 +92,7 @@ export function GrantSubscriptionDialog({
         >
           {plans.map((plan) => (
             <option key={plan.id} value={plan.id}>
-              {plan.title} — {formatPriceKzt(plan.priceKzt)}
+              {plan.titleRu} — {formatPriceKzt(plan.priceKzt)}
             </option>
           ))}
         </SelectField>
@@ -104,7 +105,11 @@ export function GrantSubscriptionDialog({
           <DialogClose render={<Button variant="outline" />}>
             {t("cancel")}
           </DialogClose>
-          <Button type="button" disabled={isPending || planId.length === 0} onClick={handleGrant}>
+          <Button
+            type="button"
+            disabled={isPending || planId.length === 0}
+            onClick={handleGrant}
+          >
             {t("grantConfirm")}
           </Button>
         </DialogFooter>

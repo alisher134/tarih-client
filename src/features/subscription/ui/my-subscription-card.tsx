@@ -74,7 +74,11 @@ export function MySubscriptionCard() {
 
                     return (
                       <div className="flex flex-col gap-3 rounded-xl border p-4">
-                        <p className="font-medium">{upcoming.plan.title}</p>
+                        <p className="font-medium">
+                          {locale === "kz" && upcoming.plan.titleKz
+                            ? upcoming.plan.titleKz
+                            : upcoming.plan.titleRu}
+                        </p>
                         <p className="text-sm text-muted-foreground">
                           {t("upcomingStartsAt", {
                             date: formatDateTime(upcoming.startsAt, locale),
@@ -101,7 +105,11 @@ export function MySubscriptionCard() {
                   <div className="flex flex-col gap-3 rounded-xl border p-4">
                     <div className="flex flex-wrap items-start justify-between gap-2">
                       <div>
-                        <p className="font-medium">{subscription.plan.title}</p>
+                        <p className="font-medium">
+                          {locale === "kz" && subscription.plan.titleKz
+                            ? subscription.plan.titleKz
+                            : subscription.plan.titleRu}
+                        </p>
                         <p className="text-sm text-muted-foreground">
                           {t("statusActive")}
                         </p>

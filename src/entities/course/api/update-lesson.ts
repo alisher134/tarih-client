@@ -7,11 +7,7 @@ export async function updateLesson(
   lessonId: string,
   input: UpdateLessonInput,
 ): Promise<CourseLesson> {
-  const { data } = await apiClient.patch(`/admin/lessons/${lessonId}`, {
-    ...input,
-    // Backend still has isFree; all lessons are paid
-    isFree: false,
-  });
+  const { data } = await apiClient.patch(`/admin/lessons/${lessonId}`, input);
 
   return parseCourseLesson(data);
 }

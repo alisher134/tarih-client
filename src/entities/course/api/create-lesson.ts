@@ -9,8 +9,7 @@ export async function createLesson(
 ): Promise<CourseLesson> {
   const { data } = await apiClient.post(
     `/admin/courses/${courseId}/lessons`,
-    // Backend still has isFree; all lessons are paid
-    { ...input, isFree: false },
+    input,
   );
 
   return parseCourseLesson(data);

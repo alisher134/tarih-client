@@ -2,10 +2,7 @@
 
 import { useLocale, useTranslations } from "next-intl";
 
-import {
-  formatPriceKzt,
-  type UserSubscription,
-} from "@/entities/subscription";
+import { formatPriceKzt, type UserSubscription } from "@/entities/subscription";
 import { getErrorMessage } from "@/shared/api";
 import { formatDateTime } from "@/shared/lib/dayjs";
 import { AsyncWrapper } from "@/shared/ui/async-wrapper";
@@ -25,7 +22,9 @@ type AdminUserSubscriptionsProps = {
   userId: string;
 };
 
-export function AdminUserSubscriptions({ userId }: AdminUserSubscriptionsProps) {
+export function AdminUserSubscriptions({
+  userId,
+}: AdminUserSubscriptionsProps) {
   const t = useTranslations("adminSubscriptions");
   const subscriptionsQuery = useUserSubscriptions(userId);
   const plansQuery = useSubscriptionPlans();
@@ -52,7 +51,10 @@ export function AdminUserSubscriptions({ userId }: AdminUserSubscriptionsProps) 
           <p className="text-sm text-muted-foreground">{t("description")}</p>
         </div>
 
-        <Show when={plansQuery.data != null && plansQuery.data.length > 0} data={plansQuery.data}>
+        <Show
+          when={plansQuery.data != null && plansQuery.data.length > 0}
+          data={plansQuery.data}
+        >
           {(plans) => <GrantSubscriptionDialog userId={userId} plans={plans} />}
         </Show>
       </div>
@@ -70,9 +72,7 @@ export function AdminUserSubscriptions({ userId }: AdminUserSubscriptionsProps) 
         {({ subscriptions }) => (
           <Show
             when={subscriptions.length > 0}
-            fallback={
-              <EmptyState title={t("empty")} />
-            }
+            fallback={<EmptyState title={t("empty")} />}
           >
             <ul className="flex flex-col gap-3">
               {subscriptions.map((subscription) => (
@@ -104,14 +104,13 @@ function SubscriptionHistoryItem({
 }: SubscriptionHistoryItemProps) {
   const t = useTranslations("adminSubscriptions");
   const locale = useLocale();
-  const canCancel =
-    subscription.status === "ACTIVE" && !subscription.isExpired;
+  const canCancel = subscription.status === "ACTIVE" && !subscription.isExpired;
 
   return (
     <li className="rounded-xl border p-4">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div className="flex flex-col gap-1">
-          <p className="font-medium">{subscription.plan.title}</p>
+          <p className="font-medium">{subscription.plan.titleRu}</p>
           <p className="text-sm text-muted-foreground">
             {t(`status.${subscription.status}`)}
           </p>

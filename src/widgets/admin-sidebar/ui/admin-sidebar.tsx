@@ -2,6 +2,7 @@ import {
   HouseIcon,
   LibraryIcon,
   UsersIcon,
+  CreditCardIcon,
   type LucideIcon,
 } from "lucide-react";
 import { getTranslations } from "next-intl/server";
@@ -14,6 +15,7 @@ const navIcons = {
   "/admin": HouseIcon,
   "/admin/users": UsersIcon,
   "/admin/courses": LibraryIcon,
+  "/admin/subscription-plans": CreditCardIcon,
 } as const satisfies Record<AdminNavHref, LucideIcon>;
 
 export async function AdminSidebar() {

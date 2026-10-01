@@ -14,10 +14,9 @@ export { getUserSubscriptions } from "./api/get-user-subscriptions";
 export { grantUserSubscription } from "./api/grant-user-subscription";
 export { cancelUserSubscription } from "./api/cancel-user-subscription";
 
-export {
-  formatPriceKzt,
-  formatPricePerMonthKzt,
-} from "./lib/format-price-kzt";
+export * from "./api/admin-subscription-plans";
+
+export { formatPriceKzt, formatPricePerMonthKzt } from "./lib/format-price-kzt";
 
 export {
   MY_SUBSCRIPTION_QUERY_KEY,

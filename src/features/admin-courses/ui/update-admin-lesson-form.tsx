@@ -1,8 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo, useRef } from "react";
 
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
+import { Plyr, type APITypes } from "plyr-react";
+import "plyr-react/plyr.css";
 
 import type { CourseLesson } from "@/entities/course";
 import { getErrorMessage } from "@/shared/api";
@@ -14,6 +16,10 @@ import { ErrorAlert } from "@/shared/ui/error-alert";
 import { InputField } from "@/shared/ui/input-field";
 import { Show } from "@/shared/ui/show";
 import { showSuccessToast } from "@/shared/utils";
+import type { Locale } from "@/shared/config/i18n/routing";
+import { getPlyrOptions } from "@/features/lesson-player/lib/plyr-options";
+
+import { usePlaybackUrl } from "@/features/lesson-player/model/use-playback-url";
 
 import {
   createLessonSchema,
@@ -42,6 +48,11 @@ export function UpdateAdminLessonForm({
     values: toLessonValues(lesson),
   });
   const { errors } = form.formState;
+
+  const playbackQuery = usePlaybackUrl(
+    lesson.id,
+    lesson.videoObjectKey != null && lesson.videoObjectKey.length > 0,
+  );
 
   const handleSave = (values: LessonFormValues) => {
     setSubmitError(null);
@@ -125,9 +136,15 @@ export function UpdateAdminLessonForm({
                 />
               </div>
               <Show when={watch("videoObjectKey").length > 0}>
-                <p className="truncate text-xs text-muted-foreground">
-                  {watch("videoObjectKey")}
-                </p>
+                <div className="flex flex-col gap-2">
+                  <p className="truncate text-xs text-muted-foreground">
+                    {watch("videoObjectKey")}
+                  </p>
+                  {watch("videoObjectKey") === lesson.videoObjectKey &&
+                  playbackQuery.data?.downloadUrl ? (
+                    <AdminVideoPreview src={playbackQuery.data.downloadUrl} />
+                  ) : null}
+                </div>
               </Show>
             </div>
             <Button type="submit" disabled={isPending} className="self-end">
@@ -148,4 +165,25 @@ function toLessonValues(lesson: CourseLesson): LessonFormValues {
     videoObjectKey: lesson.videoObjectKey ?? "",
     videoDuration: lesson.videoDuration ?? 0,
   };
+}
+
+function AdminVideoPreview({ src }: { src: string }) {
+  const locale = useLocale();
+  const playerRef = useRef<APITypes>(null);
+
+  const source = useMemo(
+    () => ({
+      type: "video" as const,
+      sources: [{ src }],
+    }),
+    [src],
+  );
+
+  const options = useMemo(() => getPlyrOptions(locale as Locale), [locale]);
+
+  return (
+    <div className="overflow-hidden rounded-xl bg-black">
+      <Plyr ref={playerRef} source={source} options={options} key={src} />
+    </div>
+  );
 }

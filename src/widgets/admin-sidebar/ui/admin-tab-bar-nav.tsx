@@ -6,6 +6,7 @@ import {
   LibraryIcon,
   MenuIcon,
   UsersIcon,
+  CreditCardIcon,
   type LucideIcon,
 } from "lucide-react";
 
@@ -19,6 +20,7 @@ const tabIcons = {
   "/admin": HouseIcon,
   "/admin/users": UsersIcon,
   "/admin/courses": LibraryIcon,
+  "/admin/subscription-plans": CreditCardIcon,
 } as const satisfies Record<AdminNavHref, LucideIcon>;
 
 type AdminTabBarNavProps = {

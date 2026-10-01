@@ -24,5 +24,29 @@
   "errors": {
     "loadFailed": "Не удалось загрузить подписки",
     "grantFailed": "Не удалось выдать подписку"
+  },
+  "plans": {
+    "title": "Тарифные планы",
+    "edit": "Изменить",
+    "delete": "Удалить",
+    "noPlans": "Нет планов",
+    "limitReached": "Достигнут лимит в 3 тарифных плана.",
+    "createPlan": "Добавить новый план",
+    "editPlan": "Редактировать план",
+    "create": "Создать",
+    "update": "Сохранить",
+    "titleRu": "Title (Название - RU)",
+    "titleKz": "Title (Атауы - KZ)",
+    "durationMonths": "Duration (Months)",
+    "priceKzt": "Price (KZT)",
+    "description": "Description (Описание)",
+    "slug": "Slug",
+    "deleteConfirm": "Вы уверены, что хотите удалить этот план?",
+    "planDeleted": "План удален",
+    "planCreated": "План успешно создан",
+    "planUpdated": "План успешно обновлен",
+    "deleteError": "Ошибка при удалении плана",
+    "saveError": "Ошибка при сохранении плана",
+    "loadError": "Не удалось загрузить тарифные планы"
   }
 }

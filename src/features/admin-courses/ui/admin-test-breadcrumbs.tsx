@@ -3,29 +3,31 @@
 import { useMemo } from "react";
 
 import type { CourseDetail, LessonTest } from "@/entities/course";
-import { PageBreadcrumbs, type PageBreadcrumbItem } from "@/shared/ui/page-breadcrumbs";
+import {
+  PageBreadcrumbs,
+  type PageBreadcrumbItem,
+} from "@/shared/ui/page-breadcrumbs";
 import { useTranslations } from "next-intl";
+
+import { useAdminCourse } from "../model/use-admin-course";
 
 type AdminTestBreadcrumbsProps = {
   courseId: string;
   testId: string;
-  course?: CourseDetail;
-  test?: LessonTest;
 };
 
 export function AdminTestBreadcrumbs({
   courseId,
   testId,
-  course,
-  test,
 }: AdminTestBreadcrumbsProps) {
   const tSidebar = useTranslations("adminSidebar");
   const t = useTranslations("adminCourses");
+  const { data: course } = useAdminCourse(courseId);
   const lesson = useMemo(
     () => course?.lessons.find((item) => item.test?.id === testId),
     [course?.lessons, testId],
   );
-  const resolvedTest = test ?? lesson?.test;
+  const resolvedTest = lesson?.test;
   const items: PageBreadcrumbItem[] = [
     { label: tSidebar("courses"), href: "/admin/courses" },
     {

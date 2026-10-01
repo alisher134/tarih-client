@@ -152,7 +152,7 @@ function SubscriptionOverviewCard() {
 
                 return (
                   <div className="mt-2 flex flex-col gap-1">
-                    <p className="font-medium">{subscription.plan.title}</p>
+                    <p className="font-medium">{subscription.plan.titleRu}</p>
                     <p className="text-sm text-muted-foreground">
                       {t("overview.subscriptionDetails", {
                         days: subscription.remainingDays,

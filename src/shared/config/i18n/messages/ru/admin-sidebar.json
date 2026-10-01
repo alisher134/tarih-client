@@ -4,5 +4,6 @@
   "users": "Пользователи",
   "courses": "Курсы",
   "dashboard": "В кабинет",
-  "logout": "Выйти"
+  "logout": "Выйти",
+  "subscriptionPlans": "Тарифные планы"
 }

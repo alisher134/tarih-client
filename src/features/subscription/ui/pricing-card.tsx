@@ -10,8 +10,7 @@ import {
 } from "@/shared/ui/card";
 
 type PricingCardProps = {
-  months: number;
-  period: string;
+  title: string;
   price: string;
   pricePerMonth: string;
   perMonthLabel: string;
@@ -22,8 +21,7 @@ type PricingCardProps = {
 };
 
 export function PricingCard({
-  months,
-  period,
+  title,
   price,
   pricePerMonth,
   perMonthLabel,
@@ -52,11 +50,10 @@ export function PricingCard({
           </div>
         )}
         <CardTitle className="flex flex-col items-center gap-2">
-          <div className="flex items-baseline gap-1.5 text-primary">
-            <span className="font-heading text-5xl font-bold tracking-tight">
-              {months}
+          <div className="flex items-baseline gap-1.5 text-primary text-center">
+            <span className="font-heading text-4xl font-bold tracking-tight">
+              {title}
             </span>
-            <span className="text-lg font-medium">{period}</span>
           </div>
         </CardTitle>
       </CardHeader>

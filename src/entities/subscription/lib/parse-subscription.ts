@@ -10,7 +10,8 @@ import type {
 const subscriptionPlanSchema = z.object({
   id: z.string(),
   slug: z.string(),
-  title: z.string(),
+  titleRu: z.string(),
+  titleKz: z.string().optional(),
   durationMonths: z.number(),
   priceKzt: z.number(),
 });
@@ -48,7 +49,9 @@ function parsePlansArray(data: unknown): SubscriptionPlan[] {
     return z.array(subscriptionPlanSchema).parse(data);
   }
 
-  const wrapped = z.object({ data: z.array(subscriptionPlanSchema) }).parse(data);
+  const wrapped = z
+    .object({ data: z.array(subscriptionPlanSchema) })
+    .parse(data);
   return wrapped.data;
 }
 

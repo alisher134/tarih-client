@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "cn";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 
 import {
   formatPriceKzt,
@@ -34,6 +34,7 @@ export function PricingPlans() {
   const tSubscription = useTranslations("subscription");
   const tErrors = useTranslations("errors");
   const { data, isLoading, isError, error } = useSubscriptionPlans();
+  const locale = useLocale();
   const featuredPlanId = data == null ? null : getFeaturedPlanId(data);
 
   return (
@@ -57,12 +58,15 @@ export function PricingPlans() {
           fallback={<EmptyState title={t("plansEmpty")} />}
         >
           <div className="flex flex-col gap-4">
-            <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {plans.map((plan) => (
                 <li key={plan.id}>
                   <PricingCard
-                    months={plan.durationMonths}
-                    period={plan.title}
+                    title={
+                      locale === "kz" && plan.titleKz
+                        ? plan.titleKz
+                        : plan.titleRu
+                    }
                     price={formatPriceKzt(plan.priceKzt)}
                     pricePerMonth={formatPricePerMonthKzt(
                       plan.priceKzt,

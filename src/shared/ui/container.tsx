@@ -9,7 +9,7 @@ export function Container({
   className?: string;
 }) {
   return (
-    <div className={cn("container mx-auto", className)} {...props}>
+    <div className={cn("container mx-auto px-4 md:px-8", className)} {...props}>
       {children}
     </div>
   );

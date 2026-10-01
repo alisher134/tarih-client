@@ -26,7 +26,10 @@ export default async function RootLayout({
   const locale = await getLocale();
 
   return (
-    <html lang={locale} className={`${inter.variable} h-full antialiased`}>
+    <html
+      lang={locale}
+      className={`${inter.variable} h-full antialiased scroll-smooth`}
+    >
       <body className="min-h-full flex flex-col font-sans">
         <AppProviders>
           {children}

@@ -21,7 +21,10 @@ export async function FaqSection() {
   }));
 
   return (
-    <section className="mx-auto grid max-w-5xl gap-10 lg:grid-cols-[minmax(0,16rem)_1fr] lg:items-start lg:gap-16">
+    <section
+      id="faq"
+      className="mx-auto grid max-w-5xl gap-10 lg:grid-cols-[minmax(0,16rem)_1fr] lg:items-start lg:gap-16"
+    >
       <div className="lg:sticky lg:top-8">
         <SectionHeader
           align="left"
