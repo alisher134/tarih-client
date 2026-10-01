@@ -13,7 +13,7 @@
   "hidePassword": "Құпиясөзді жасыру",
   "errors": {
     "emailRequired": "Email енгізіңіз",
-    "emailInvalid": "Дұрыс email енгізіңіз",
+    "emailInvalid": "Жарамды email енгізіңіз",
     "passwordRequired": "Құпиясөзді енгізіңіз",
     "requestFailed": "Кіру мүмкін болмады"
   }

@@ -11,7 +11,7 @@
   "upcomingRenewal": "Келесі ұзарту {date} басталады",
   "statusActive": "Белсенді",
   "month": "ай",
-  "expiresAt": "Жарамды мерзімі",
+  "expiresAt": "Аяқталу мерзімі",
   "remainingDays": "Қалған күндер",
   "checkingPayment": "Төлем тексерілуде…",
   "paymentActivated": "Жазылым белсендірілді",

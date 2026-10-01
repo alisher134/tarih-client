@@ -30,7 +30,7 @@
   "emptyFavorites": "Жылдам оралу үшін курстарды сақтаңыз.",
   "browseCourses": "Курстарды қарау",
   "favoriteAdd": "Сақтау",
-  "favoriteRemove": "Сақталғандардан алу",
+  "favoriteRemove": "Сақталғандардан алып тастау",
   "back": "Артқа",
   "curriculum": "Курс бағдарламасы",
   "freeOrderHint": "Сабақтар мен тесттерді кез келген ретпен өтуге болады.",
@@ -41,14 +41,14 @@
   "next": "Алдыға",
   "morePages": "Тағы беттер",
   "successFavoriteAdd": "Курс сақталды",
-  "successFavoriteRemove": "Курс сақталғандардан алынды",
+  "successFavoriteRemove": "Курс сақталғандардан алып тасталды",
   "retry": "Қайталау",
   "backToCourses": "Курстар тізіміне",
   "errors": {
     "loadFailed": "Курстарды жүктеу мүмкін болмады",
     "courseLoadFailed": "Курсты жүктеу мүмкін болмады",
     "subscriptionLoadFailed": "Жазылымды тексеру мүмкін болмады",
-    "learningSummaryLoadFailed": "Курс прогрессін жүктеу мүмкін болмады",
+    "learningSummaryLoadFailed": "Курс прогресін жүктеу мүмкін болмады",
     "favoriteFailed": "Сақталған курстарды жаңарту мүмкін болмады"
   }
 }

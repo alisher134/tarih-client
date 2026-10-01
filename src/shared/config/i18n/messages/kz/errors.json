@@ -5,7 +5,7 @@
     "ACTIVE_SUBSCRIPTION_REQUIRED": "Қол жеткізу үшін белсенді жазылым қажет",
     "LESSON_NOT_COMPLETED": "Алдымен сабақты аяқтаңыз",
     "TEST_TIME_LIMIT_EXCEEDED": "Тест уақыты аяқталды",
-    "TEST_ATTEMPTS_LIMIT_REACHED": "Әрекеттер лимиті таусылды",
+    "TEST_ATTEMPTS_LIMIT_REACHED": "Мүмкіндіктер саны таусылды",
     "INVALID_RESET_TOKEN": "Құпиясөзді қалпына келтіру сілтемесі жарамсыз немесе мерзімі өткен",
     "TOKEN_VERSION_MISMATCH": "Сессия аяқталды. Қайта кіріңіз"
   },

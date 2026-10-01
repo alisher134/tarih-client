@@ -7,7 +7,7 @@
     "enrollments": "Курсқа жазылулар",
     "tests": "Тесттер",
     "enrollmentsCompleted": "{count} аяқталды",
-    "testsPassRate": "Өту үлесі {passRate}"
+    "testsPassRate": "Сәттілік көрсеткіші {passRate}"
   },
   "subscriptions": {
     "title": "Жазылымдар",
@@ -26,7 +26,7 @@
     "course": "Курс",
     "completed": "Аяқталды",
     "progress": "Орташа прогресс",
-    "testPassRate": "Тест өту үлесі",
+    "testPassRate": "Тест тапсыру көрсеткіші",
     "open": "Ашу",
     "empty": "Курстар табылмады"
   },

@@ -65,7 +65,7 @@
         "continueButton": "Жалғастыру",
         "statisticsTitle": "Сіздің статистикаңыз",
         "statCourses": "Курстар",
-        "statCoursesDetail": "5 қолжетімдіден",
+        "statCoursesDetail": "5 қолжетімді курстан",
         "statLessons": "Өтілген сабақтар",
         "statTime": "Оқу уақыты",
         "statTimeValue": "12 с 30 м",
@@ -78,7 +78,7 @@
         "subscriptionDays": "142 күн қалды"
       },
       "test": {
-        "tab": "Тесттерді өту",
+        "tab": "Тест тапсыру",
         "lesson": "4 сабақ",
         "quiz": "Аралық бақылау",
         "title": "Тест: XV-XVI ғғ. Қазақ хандығы",

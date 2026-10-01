@@ -50,7 +50,7 @@
   "successDelete": "Пайдаланушы жойылды",
   "errors": {
     "emailRequired": "Email енгізіңіз",
-    "emailInvalid": "Email дұрыс емес",
+    "emailInvalid": "Жарамды email енгізіңіз",
     "firstNameRequired": "Атын енгізіңіз",
     "firstNameMax": "Аты 100 таңбадан аспауы керек",
     "lastNameRequired": "Тегін енгізіңіз",

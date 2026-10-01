@@ -7,7 +7,7 @@
   "lastName": "Тегі",
   "lastNamePlaceholder": "Тегін енгізіңіз",
   "password": "Құпиясөз",
-  "passwordPlaceholder": "Құпиясөз ойластырыңыз",
+  "passwordPlaceholder": "Жаңа құпиясөз енгізіңіз",
   "confirmPassword": "Құпиясөзді қайталаңыз",
   "confirmPasswordPlaceholder": "Құпиясөзді қайталаңыз",
   "submit": "Тіркелу",
@@ -18,7 +18,7 @@
   "hidePassword": "Құпиясөзді жасыру",
   "errors": {
     "emailRequired": "Email енгізіңіз",
-    "emailInvalid": "Дұрыс email енгізіңіз",
+    "emailInvalid": "Жарамды email енгізіңіз",
     "firstNameRequired": "Атын енгізіңіз",
     "firstNameMax": "Аты 100 таңбадан аспауы керек",
     "lastNameRequired": "Тегін енгізіңіз",
