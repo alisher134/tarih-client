@@ -53,12 +53,14 @@ export function LessonVideo({
   useEffect(() => {
     if (!src.includes(".mpd")) return;
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let shakaInstance: any = null;
-    
+
     const initShaka = async () => {
       // Fallback for SSR if window is not defined
       if (typeof window === "undefined") return;
 
+      // @ts-expect-error Plyr TS type doesn't expose media, but it exists in JS
       const videoElement = playerRef.current?.plyr?.media as HTMLVideoElement;
       if (!videoElement) {
         // If Plyr hasn't mounted the video element yet, try again in 100ms
@@ -69,7 +71,7 @@ export function LessonVideo({
       try {
         const shakaModule = await import("shaka-player");
         const shaka = shakaModule.default || shakaModule;
-        
+
         // Ensure Shaka polyfills are installed
         shaka.polyfill.installAll();
         if (!shaka.Player.isBrowserSupported()) {
@@ -81,19 +83,23 @@ export function LessonVideo({
         shakaInstance = player;
 
         const token = getAccessToken();
-        
+
         // We pass the auth token to the DRM License Server
-        player.getNetworkingEngine()?.registerRequestFilter((type: any, request: any) => {
-          if (type === shaka.net.NetworkingEngine.RequestType.LICENSE) {
-            request.headers['Authorization'] = `Bearer ${token}`;
-            request.headers['Content-Type'] = 'application/json';
-          }
-        });
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        player
+          .getNetworkingEngine()
+          ?.registerRequestFilter((type: any, request: any) => {
+            if (type === shaka.net.NetworkingEngine.RequestType.LICENSE) {
+              request.headers["Authorization"] = `Bearer ${token}`;
+              request.headers["Content-Type"] = "application/json";
+            }
+          });
 
         player.configure({
           drm: {
             servers: {
-              'org.w3.clearkey': process.env.NEXT_PUBLIC_API_URL + '/drm/license',
+              "org.w3.clearkey":
+                process.env.NEXT_PUBLIC_API_URL + "/drm/license",
             },
           },
         });
@@ -105,7 +111,7 @@ export function LessonVideo({
     };
 
     initShaka();
-    
+
     return () => {
       if (shakaInstance) {
         shakaInstance.destroy();
