@@ -14,3 +14,5 @@ export {
   AdminTestDetails,
   AdminTestPage,
 } from "@/features/manage-tests";
+export { GenerateCopyButton } from "./ui/generate-copy-button";
+export { GenerateTestDialog } from "./ui/generate-test-dialog";

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import { TrashIcon } from "lucide-react";
+import { Sparkles, TrashIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 import type { Question } from "@/entities/course";
@@ -24,6 +24,7 @@ import {
 import { showSuccessToast } from "@/shared/utils";
 
 import { useDeleteQuestion } from "../model/use-delete-question";
+import { GenerateTestDialog } from "./generate-test-dialog";
 import { QuestionDialog } from "./question-dialog";
 
 type AdminQuestionsTableProps = {
@@ -43,6 +44,7 @@ export function AdminQuestionsTable({
   const { mutate, isPending } = useDeleteQuestion(courseId, testId);
   const [editingQuestion, setEditingQuestion] = useState<Question | null>(null);
   const [isCreateOpen, setIsCreateOpen] = useState(false);
+  const [isGenerateOpen, setIsGenerateOpen] = useState(false);
   const sortedQuestions = [...questions].sort(
     (left, right) => left.order - right.order,
   );
@@ -64,10 +66,31 @@ export function AdminQuestionsTable({
     <section className="flex flex-col gap-4">
       <div className="flex items-center justify-between gap-3">
         <SectionHeading>{t("questions")}</SectionHeading>
-        <Button type="button" onClick={() => setIsCreateOpen(true)}>
-          {t("addQuestion")}
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => setIsGenerateOpen(true)}
+            className="gap-2 border-primary/30 hover:border-primary/60 hover:bg-primary/5"
+          >
+            <Sparkles className="size-4 text-primary" />
+            {t("generateBulkTest")}
+          </Button>
+          <Button type="button" onClick={() => setIsCreateOpen(true)}>
+            {t("addQuestion")}
+          </Button>
+        </div>
       </div>
+
+      <GenerateTestDialog
+        courseId={courseId}
+        testId={testId}
+        nextOrder={sortedQuestions.length}
+        existingQuestions={sortedQuestions.map((item) => item.text)}
+        copyParent={copyParent}
+        open={isGenerateOpen}
+        onOpenChange={setIsGenerateOpen}
+      />
 
       <QuestionDialog
         courseId={courseId}
@@ -89,9 +112,7 @@ export function AdminQuestionsTable({
 
       <Show
         when={sortedQuestions.length > 0}
-        fallback={
-          <EmptyState title={t("emptyQuestions")} />
-        }
+        fallback={<EmptyState title={t("emptyQuestions")} />}
       >
         <Table>
           <TableHeader>

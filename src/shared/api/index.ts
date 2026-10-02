@@ -1,4 +1,6 @@
 export { generateCopy } from "./generate-copy";
+export { generatePlan } from "./generate-plan";
+export { generateTest } from "./generate-test";
 export { getErrorMessage } from "./get-error-message";
 export { apiClient } from "./http";
 export type { ApiError, ApiErrorCode } from "@/shared/lib/api-error";

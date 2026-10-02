@@ -23,6 +23,7 @@ type GenerateCopyButtonProps = {
   field: GenerateCopyField;
   title: string;
   description: string;
+  targetLocale?: "kz" | "ru";
   parent?: GenerateCopyParent;
   onGenerated: (text: string) => void;
   onOptionsGenerated?: (options: GeneratedOption[]) => void;
@@ -33,6 +34,7 @@ export function GenerateCopyButton({
   field,
   title,
   description,
+  targetLocale,
   parent,
   onGenerated,
   onOptionsGenerated,
@@ -40,10 +42,13 @@ export function GenerateCopyButton({
   const locale = useLocale();
   const t = useTranslations("adminCourses");
   const { mutate, isPending } = useGenerateCopy();
+  const effectiveLocale =
+    targetLocale ??
+    (hasLocale(routing.locales, locale) ? locale : routing.defaultLocale);
   const request: GenerateCopyRequest = {
     entity,
     field,
-    locale: hasLocale(routing.locales, locale) ? locale : routing.defaultLocale,
+    locale: effectiveLocale,
     title,
     description,
     parent,

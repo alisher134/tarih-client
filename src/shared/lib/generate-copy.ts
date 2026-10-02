@@ -7,6 +7,7 @@ export const GENERATE_COPY_ENTITIES = [
   "lesson",
   "test",
   "question",
+  "plan",
 ] as const;
 export const GENERATE_COPY_FIELDS = [
   "title",
@@ -47,6 +48,8 @@ export type GenerateCopyParent = {
   otherOptions?: string[];
   existingQuestions?: string[];
   optionCount?: number;
+  durationMonths?: number;
+  priceKzt?: number;
 };
 
 export type GenerateCopyRequest = {
@@ -71,6 +74,8 @@ const generateCopyParentSchema = z.object({
   otherOptions: z.array(z.string()).optional(),
   existingQuestions: z.array(z.string()).optional(),
   optionCount: z.number().int().positive().optional(),
+  durationMonths: z.number().int().positive().optional(),
+  priceKzt: z.number().int().nonnegative().optional(),
 });
 
 export const generateCopyRequestSchema = z.object({
@@ -106,6 +111,12 @@ export function getContextSnippets(request: GenerateCopyRequest): string[] {
     request.parent?.testTitle,
     request.parent?.testDescription,
     request.parent?.questionText,
+    request.parent?.durationMonths
+      ? `${request.parent.durationMonths} months`
+      : undefined,
+    request.parent?.priceKzt != null
+      ? `${request.parent.priceKzt} KZT`
+      : undefined,
     ...(request.parent?.otherOptions ?? []),
     ...(request.parent?.existingQuestions ?? []),
   ].flatMap((value) => {

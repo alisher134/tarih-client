@@ -6,6 +6,7 @@ const ENTITY_LABEL = {
   lesson: { kz: "сабақ", ru: "урок" },
   test: { kz: "тест", ru: "тест" },
   question: { kz: "сұрақ", ru: "вопрос" },
+  plan: { kz: "тарифтік жоспар", ru: "тарифный план" },
 } as const;
 
 const FIELD_LABEL = {
@@ -40,16 +41,28 @@ export function buildSystemInstruction(request: GenerateCopyRequest): string {
     );
   }
 
+  const role =
+    request.entity === "plan"
+      ? "You are a product marketing copywriter for Tarih, an EdTech platform for history of Kazakhstan for school students."
+      : "You are an editor for Tarih, an EdTech platform with history courses for school students in Kazakhstan.";
+
+  const fieldGuideline =
+    request.entity === "plan"
+      ? request.field === "title"
+        ? "Title: clear tariff name (e.g. including duration, ENT focus), 4–60 characters, no period."
+        : "Description: 1–3 engaging sentences explaining benefits of subscribing (unlimited courses, tests, ENT prep), 40–250 characters."
+      : request.field === "title"
+        ? "Title: specific, 4–80 characters, no trailing period, not clickbait."
+        : "Description: 1–3 sentences, 50–400 characters, clear for students, not promotional.";
+
   return [
-    "You are an editor for Tarih, an EdTech platform with history courses for school students in Kazakhstan.",
+    role,
     `Write the ${field} of a ${entity}.`,
     languageLock,
     `Site UI language is ${language} (${request.locale}). The entire output MUST be in ${language}.`,
     "If source fields are in another language, translate and rewrite them into the site language. Keep the topic.",
     "Output ONLY the requested text: no quotes, no markdown, no labels, no commentary.",
-    request.field === "title"
-      ? "Title: specific, 4–80 characters, no trailing period, not clickbait."
-      : "Description: 1–3 sentences, 50–400 characters, clear for students, not promotional.",
+    fieldGuideline,
     "If the current field has text, rewrite and improve it: keep the topic, make it clearer.",
     "If the current field is a short hint, expand it into a polished result.",
     "If the current field is empty, create it from the other fields and parent context.",
@@ -86,6 +99,14 @@ export function buildUserPrompt(request: GenerateCopyRequest): string {
       `Parent test title: ${formatValue(request.parent.testTitle)}`,
       `Parent test description: ${formatValue(request.parent.testDescription)}`,
     );
+  }
+
+  if (request.parent?.durationMonths != null) {
+    lines.push(`Plan duration in months: ${request.parent.durationMonths}`);
+  }
+
+  if (request.parent?.priceKzt != null) {
+    lines.push(`Plan price in KZT: ${request.parent.priceKzt}`);
   }
 
   if (request.entity === "question") {

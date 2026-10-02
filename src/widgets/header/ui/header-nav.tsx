@@ -12,6 +12,7 @@ import {
 } from "@/shared/ui/sheet";
 import { useState } from "react";
 import { AppLogo } from "@/shared/ui/app-logo";
+import { Show } from "@/shared/ui/show";
 
 export type HeaderNavProps = {
   coursesLabel: string;
@@ -45,15 +46,26 @@ export function HeaderDesktopNav(props: HeaderNavProps) {
   );
 }
 
-export type HeaderMobileMenuProps = HeaderNavProps & {
+export type HeaderMobileMenuProps = {
+  coursesLabel?: string;
+  pricingLabel?: string;
+  faqLabel?: string;
   menuLabel: string;
   authSlot: React.ReactNode;
   langSlot: React.ReactNode;
+  showNav?: boolean;
 };
 
 export function HeaderMobileMenu(props: HeaderMobileMenuProps) {
   const [open, setOpen] = useState(false);
-  const links = getLinks(props);
+  const links =
+    props.showNav && props.coursesLabel && props.pricingLabel && props.faqLabel
+      ? getLinks({
+          coursesLabel: props.coursesLabel,
+          pricingLabel: props.pricingLabel,
+          faqLabel: props.faqLabel,
+        })
+      : [];
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
@@ -81,25 +93,27 @@ export function HeaderMobileMenu(props: HeaderMobileMenuProps) {
           </div>
         </SheetHeader>
 
-        <div className="flex flex-col gap-3 flex-1 mt-6 px-6 sm:px-0 overflow-y-auto">
-          {links.map((link, i) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="group flex items-center rounded-2xl px-5 py-4 text-lg font-semibold text-foreground/70 transition-all duration-300 hover:bg-primary/10 hover:text-primary active:scale-[0.98] border border-transparent hover:border-primary/20"
-              style={{
-                animationDelay: `${i * 50}ms`,
-                animationFillMode: "both",
-              }}
-              onClick={() => setOpen(false)}
-            >
-              <span className="relative">
-                {link.label}
-                <span className="absolute -bottom-1 left-0 h-[2px] w-0 bg-primary transition-all duration-300 group-hover:w-full"></span>
-              </span>
-            </Link>
-          ))}
-        </div>
+        <Show when={links.length > 0}>
+          <div className="flex flex-col gap-3 flex-1 mt-6 px-6 sm:px-0 overflow-y-auto">
+            {links.map((link, i) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="group flex items-center rounded-2xl px-5 py-4 text-lg font-semibold text-foreground/70 transition-all duration-300 hover:bg-primary/10 hover:text-primary active:scale-[0.98] border border-transparent hover:border-primary/20"
+                style={{
+                  animationDelay: `${i * 50}ms`,
+                  animationFillMode: "both",
+                }}
+                onClick={() => setOpen(false)}
+              >
+                <span className="relative">
+                  {link.label}
+                  <span className="absolute -bottom-1 left-0 h-[2px] w-0 bg-primary transition-all duration-300 group-hover:w-full"></span>
+                </span>
+              </Link>
+            ))}
+          </div>
+        </Show>
 
         <div className="mt-auto border-t border-border/50 bg-muted/30 p-6 sm:rounded-2xl sm:mb-2 sm:mx-0 flex flex-col gap-4">
           <div

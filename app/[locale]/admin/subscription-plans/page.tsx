@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 import {
   SubscriptionPlan,
@@ -10,11 +10,13 @@ import {
   updateSubscriptionPlan,
   deleteSubscriptionPlan,
 } from "@/entities/subscription";
+import { GenerateCopyButton } from "@/features/admin-courses";
+import { useGeneratePlan } from "@/shared/hooks/use-generate-plan";
 import { Card, CardContent, CardHeader, CardTitle } from "@/shared/ui/card";
 import { Button } from "@/shared/ui/button";
 import { Input } from "@/shared/ui/input";
 import { toast } from "sonner";
-import { Loader2, Plus } from "lucide-react";
+import { Loader2, Plus, Sparkles } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -25,11 +27,16 @@ import {
 
 export default function AdminSubscriptionPlansPage() {
   const t = useTranslations("adminSubscriptions");
+  const locale = useLocale();
   const [plans, setPlans] = useState<SubscriptionPlan[]>([]);
   const [loading, setLoading] = useState(true);
   const [formLoading, setFormLoading] = useState(false);
   const [editingPlan, setEditingPlan] = useState<SubscriptionPlan | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [aiPrompt, setAiPrompt] = useState("");
+
+  const { mutate: runGeneratePlan, isPending: isGeneratingPlan } =
+    useGeneratePlan();
 
   const [deleteId, setDeleteId] = useState<string | null>(null);
 
@@ -42,6 +49,32 @@ export default function AdminSubscriptionPlansPage() {
     priceKzt: 0,
     isActive: true,
   });
+
+  const handleAiAutoFill = () => {
+    runGeneratePlan(
+      {
+        durationMonths: formData.durationMonths || 1,
+        priceKzt: formData.priceKzt || 0,
+        hint: aiPrompt.trim() || undefined,
+        locale: locale === "kz" ? "kz" : "ru",
+      },
+      {
+        onSuccess: (data) => {
+          setFormData((prev) => ({
+            ...prev,
+            slug: data.slug,
+            titleRu: data.titleRu,
+            titleKz: data.titleKz,
+            description: data.description,
+          }));
+          toast.success(t("plans.aiGenerateSuccess"));
+        },
+        onError: () => {
+          toast.error(t("plans.aiGenerateFailed"));
+        },
+      },
+    );
+  };
 
   const loadPlans = useCallback(async () => {
     try {
@@ -203,6 +236,38 @@ export default function AdminSubscriptionPlansPage() {
             onSubmit={handleSubmit}
             className="flex flex-col gap-4 py-4"
           >
+            {/* AI Assistant Quick Auto-Fill */}
+            <div className="rounded-xl border border-primary/20 bg-primary/5 p-3 space-y-2">
+              <div className="flex items-center gap-1.5 text-xs font-semibold text-primary">
+                <Sparkles className="size-3.5" />
+                <span>{t("plans.aiAssistantTitle")}</span>
+              </div>
+              <div className="flex gap-2">
+                <Input
+                  value={aiPrompt}
+                  onChange={(e) => setAiPrompt(e.target.value)}
+                  placeholder={t("plans.aiAssistantPrompt")}
+                  className="h-8 text-xs bg-background"
+                  disabled={isGeneratingPlan}
+                />
+                <Button
+                  type="button"
+                  size="sm"
+                  variant="default"
+                  onClick={handleAiAutoFill}
+                  disabled={isGeneratingPlan}
+                  className="h-8 shrink-0 gap-1.5 text-xs"
+                >
+                  {isGeneratingPlan ? (
+                    <Loader2 className="size-3.5 animate-spin" />
+                  ) : (
+                    <Sparkles className="size-3.5" />
+                  )}
+                  {t("plans.aiFillAction")}
+                </Button>
+              </div>
+            </div>
+
             <div className="grid grid-cols-2 gap-4">
               <div className="flex flex-col gap-2">
                 <label className="text-sm text-muted-foreground">
@@ -218,9 +283,25 @@ export default function AdminSubscriptionPlansPage() {
                 />
               </div>
               <div className="flex flex-col gap-2">
-                <label className="text-sm text-muted-foreground">
-                  {t("plans.titleRu")}
-                </label>
+                <div className="flex items-center justify-between">
+                  <label className="text-sm text-muted-foreground">
+                    {t("plans.titleRu")}
+                  </label>
+                  <GenerateCopyButton
+                    entity="plan"
+                    field="title"
+                    title={formData.titleRu}
+                    description={formData.description}
+                    targetLocale="ru"
+                    parent={{
+                      durationMonths: formData.durationMonths,
+                      priceKzt: formData.priceKzt,
+                    }}
+                    onGenerated={(text) =>
+                      setFormData((prev) => ({ ...prev, titleRu: text }))
+                    }
+                  />
+                </div>
                 <Input
                   required
                   value={formData.titleRu}
@@ -231,9 +312,25 @@ export default function AdminSubscriptionPlansPage() {
                 />
               </div>
               <div className="flex flex-col gap-2">
-                <label className="text-sm text-muted-foreground">
-                  {t("plans.titleKz")}
-                </label>
+                <div className="flex items-center justify-between">
+                  <label className="text-sm text-muted-foreground">
+                    {t("plans.titleKz")}
+                  </label>
+                  <GenerateCopyButton
+                    entity="plan"
+                    field="title"
+                    title={formData.titleKz || formData.titleRu}
+                    description={formData.description}
+                    targetLocale="kz"
+                    parent={{
+                      durationMonths: formData.durationMonths,
+                      priceKzt: formData.priceKzt,
+                    }}
+                    onGenerated={(text) =>
+                      setFormData((prev) => ({ ...prev, titleKz: text }))
+                    }
+                  />
+                </div>
                 <Input
                   value={formData.titleKz}
                   onChange={(e) =>
@@ -254,7 +351,7 @@ export default function AdminSubscriptionPlansPage() {
                   onChange={(e) =>
                     setFormData({
                       ...formData,
-                      durationMonths: parseInt(e.target.value),
+                      durationMonths: parseInt(e.target.value) || 1,
                     })
                   }
                 />
@@ -271,15 +368,30 @@ export default function AdminSubscriptionPlansPage() {
                   onChange={(e) =>
                     setFormData({
                       ...formData,
-                      priceKzt: parseInt(e.target.value),
+                      priceKzt: parseInt(e.target.value) || 0,
                     })
                   }
                 />
               </div>
               <div className="col-span-2 flex flex-col gap-2">
-                <label className="text-sm text-muted-foreground">
-                  {t("plans.description")}
-                </label>
+                <div className="flex items-center justify-between">
+                  <label className="text-sm text-muted-foreground">
+                    {t("plans.description")}
+                  </label>
+                  <GenerateCopyButton
+                    entity="plan"
+                    field="description"
+                    title={formData.titleRu || formData.titleKz}
+                    description={formData.description}
+                    parent={{
+                      durationMonths: formData.durationMonths,
+                      priceKzt: formData.priceKzt,
+                    }}
+                    onGenerated={(text) =>
+                      setFormData((prev) => ({ ...prev, description: text }))
+                    }
+                  />
+                </div>
                 <Input
                   value={formData.description}
                   onChange={(e) =>
