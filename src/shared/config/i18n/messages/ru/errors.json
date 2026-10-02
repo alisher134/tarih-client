@@ -6,6 +6,7 @@
     "LESSON_NOT_COMPLETED": "Сначала завершите урок",
     "TEST_TIME_LIMIT_EXCEEDED": "Время теста истекло",
     "TEST_ATTEMPTS_LIMIT_REACHED": "Лимит попыток исчерпан",
+    "TEST_ALREADY_COMPLETED": "Тест уже завершён, повторная сдача недоступна",
     "INVALID_RESET_TOKEN": "Ссылка для сброса пароля недействительна или просрочена",
     "TOKEN_VERSION_MISMATCH": "Сессия завершена. Войдите снова"
   },

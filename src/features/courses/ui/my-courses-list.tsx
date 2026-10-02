@@ -1,5 +1,6 @@
 "use client";
 
+import { CheckCircle2Icon, PlayCircleIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 import { TelegramPurchaseButton } from "@/features/subscription";
@@ -96,30 +97,94 @@ export function MyCoursesList() {
                 />
               }
             >
-              <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-                {items.map((item) => {
-                  const course = item.course;
-                  const progress = item.isStarted ? item.progress : 0;
-                  const meta = item.isStarted
-                    ? item.status === "COMPLETED"
-                      ? t("completedBadge")
-                      : undefined
-                    : t("notStarted");
-                  const href = access.hasAccess
-                    ? `/dashboard/courses/${course.slug}`
-                    : SUBSCRIPTION_PLANS_HREF;
+              {(() => {
+                const inProgress = items.filter(
+                  (item) => item.status !== "COMPLETED",
+                );
+                const completed = items.filter(
+                  (item) => item.status === "COMPLETED",
+                );
 
-                  return (
-                    <CourseCard
-                      key={course.id}
-                      course={course}
-                      href={href}
-                      meta={meta}
-                      progress={progress}
-                    />
-                  );
-                })}
-              </div>
+                return (
+                  <div className="flex flex-col gap-8">
+                    {/* In-progress section */}
+                    <Show when={inProgress.length > 0}>
+                      <section className="flex flex-col gap-4">
+                        <div className="flex items-center gap-2">
+                          <PlayCircleIcon
+                            className="size-4 text-primary"
+                            aria-hidden
+                          />
+                          <h2 className="text-sm font-semibold text-foreground">
+                            {t("inProgress")}
+                          </h2>
+                          <span className="ml-1 rounded-full bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary">
+                            {inProgress.length}
+                          </span>
+                        </div>
+                        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+                          {inProgress.map((item) => {
+                            const course = item.course;
+                            const progress = item.isStarted ? item.progress : 0;
+                            const meta = item.isStarted
+                              ? undefined
+                              : t("notStarted");
+                            const href = access.hasAccess
+                              ? `/dashboard/courses/${course.slug}`
+                              : SUBSCRIPTION_PLANS_HREF;
+
+                            return (
+                              <CourseCard
+                                key={course.id}
+                                course={course}
+                                href={href}
+                                meta={meta}
+                                progress={progress}
+                              />
+                            );
+                          })}
+                        </div>
+                      </section>
+                    </Show>
+
+                    {/* Completed section */}
+                    <Show when={completed.length > 0}>
+                      <section className="flex flex-col gap-4">
+                        <div className="flex items-center gap-2">
+                          <CheckCircle2Icon
+                            className="size-4 text-green-600 dark:text-green-400"
+                            aria-hidden
+                          />
+                          <h2 className="text-sm font-semibold text-foreground">
+                            {t("completedSection")}
+                          </h2>
+                          <span className="ml-1 rounded-full bg-green-100 px-2 py-0.5 text-xs font-medium text-green-700 dark:bg-green-900/30 dark:text-green-400">
+                            {completed.length}
+                          </span>
+                        </div>
+                        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3 opacity-85">
+                          {completed.map((item) => {
+                            const course = item.course;
+                            const href = access.hasAccess
+                              ? `/dashboard/courses/${course.slug}`
+                              : SUBSCRIPTION_PLANS_HREF;
+
+                            return (
+                              <CourseCard
+                                key={course.id}
+                                course={course}
+                                href={href}
+                                meta={t("completedBadge")}
+                                progress={100}
+                              />
+                            );
+                          })}
+                        </div>
+                      </section>
+                    </Show>
+                  </div>
+                );
+              })()}
             </Show>
           )}
         </AsyncWrapper>

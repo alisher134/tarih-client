@@ -7,7 +7,10 @@ export function useLearningAccess() {
   const subscriptionQuery = useMySubscription();
   const { isAdmin, isLoading: isAdminLoading } = useIsAdmin();
 
-  const isLoading = subscriptionQuery.isLoading || isAdminLoading;
+  const isLoading =
+    subscriptionQuery.isLoading ||
+    subscriptionQuery.isFetching ||
+    isAdminLoading;
   const hasAccess =
     !isLoading &&
     !subscriptionQuery.isError &&

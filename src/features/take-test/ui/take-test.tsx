@@ -44,13 +44,28 @@ function getTestScreen(
   isChecking: boolean,
   startedAttempt: TestAttempt | null,
   result: TestAttempt | null,
+  latestAttempt?: TestAttempt | null,
+  isCompleted?: boolean,
 ): TestScreen {
   if (result != null) return "result";
   if (startedAttempt != null) {
     return startedAttempt.completedAt != null ? "result" : "form";
   }
 
+  // If the test or lesson has already been completed, cannot retake — show result
+  if (
+    isCompleted ||
+    (latestAttempt != null && latestAttempt.completedAt != null)
+  ) {
+    return "result";
+  }
+
   if (isChecking) return "checking";
+
+  // If there's an in-progress active attempt, show form
+  if (activeAttempt != null && activeAttempt.completedAt == null) {
+    return "form";
+  }
 
   if (activeAttempt == null) return "intro";
 
@@ -63,6 +78,8 @@ export function TakeTest({ slug, lessonId }: TakeTestProps) {
   const tSidebar = useTranslations("dashboardSidebar");
   const tCourses = useTranslations("courses");
   const access = useCourseAccess(slug);
+  const lesson = access.course?.lessons.find((item) => item.id === lessonId);
+  const isLessonCompleted = lesson?.isCompleted === true;
   const testQuery = useLessonTest(lessonId, access.canAccess);
   const testId = testQuery.data?.id ?? "";
   const activeAttemptQuery = useActiveAttempt(
@@ -77,14 +94,27 @@ export function TakeTest({ slug, lessonId }: TakeTestProps) {
   const currentAttempt =
     result ??
     startedAttempt ??
-    (activeAttemptQuery.data === undefined ? null : activeAttemptQuery.data);
+    (activeAttemptQuery.data === undefined ? null : activeAttemptQuery.data) ??
+    testQuery.data?.latestAttempt ??
+    (isLessonCompleted && testQuery.data
+      ? ({
+          id: testQuery.data.id,
+          userId: "",
+          testId: testQuery.data.id,
+          score: testQuery.data.passingScore,
+          passed: true,
+          startedAt: "",
+          completedAt: new Date().toISOString(),
+        } as TestAttempt)
+      : null);
   const screen = getTestScreen(
     activeAttemptQuery.data,
     activeAttemptQuery.isLoading,
     startedAttempt,
     result,
+    testQuery.data?.latestAttempt,
+    isLessonCompleted,
   );
-  const lesson = access.course?.lessons.find((item) => item.id === lessonId);
   const lessonHref = `/dashboard/courses/${slug}/lessons/${lessonId}`;
 
   const breadcrumbItems: PageBreadcrumbItem[] = [
@@ -233,6 +263,11 @@ export function TakeTest({ slug, lessonId }: TakeTestProps) {
                       test={test}
                       onStart={handleStartAttempt}
                       isStarting={startAttempt.isPending}
+                      isCompleted={
+                        isLessonCompleted ||
+                        test.latestAttempt?.completedAt != null
+                      }
+                      courseHref={`/dashboard/courses/${slug}`}
                     />
                   </Show>
 
@@ -250,6 +285,27 @@ export function TakeTest({ slug, lessonId }: TakeTestProps) {
                         homeLabel={t("backToLesson")}
                         homeHref={lessonHref}
                       />
+                    ) : isApiErrorCode(
+                        startAttempt.error,
+                        "TEST_ALREADY_COMPLETED",
+                      ) ? (
+                      <div className="flex flex-col gap-3">
+                        <ErrorAlert
+                          errorMessage={tErrors(
+                            "apiCodes.TEST_ALREADY_COMPLETED",
+                          )}
+                        />
+                        <Button
+                          type="button"
+                          variant="outline"
+                          className="self-start"
+                          onClick={() => {
+                            void testQuery.refetch();
+                          }}
+                        >
+                          {tCourses("retry")}
+                        </Button>
+                      </div>
                     ) : (
                       <div className="flex flex-col gap-3">
                         <ErrorAlert
@@ -286,9 +342,9 @@ export function TakeTest({ slug, lessonId }: TakeTestProps) {
                     <TestResult
                       attempt={currentAttempt!}
                       courseId={course.id}
-                      courseSlug={slug}
                       courseHref={`/dashboard/courses/${slug}`}
                       passingScore={test.passingScore}
+                      totalQuestions={test.questions.length}
                     />
                   </Show>
                 </div>

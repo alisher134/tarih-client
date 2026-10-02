@@ -49,7 +49,7 @@ export function TestTimer({ startedAt, timeLimit, onExpire }: TestTimerProps) {
   const strokeDashoffset = circumference - (progress / 100) * circumference;
 
   return (
-    <div className="fixed bottom-6 right-6 sm:bottom-10 sm:right-10 z-50 flex items-center justify-center rounded-full bg-card p-1 shadow-2xl transition-transform hover:scale-105">
+    <div className="fixed bottom-6 left-6 sm:bottom-10 sm:left-10 z-50 flex items-center justify-center rounded-full bg-card p-1 shadow-2xl transition-transform hover:scale-105">
       <svg
         width={size}
         height={size}

@@ -7,6 +7,7 @@ import {
   HeartIcon,
   HouseIcon,
   MenuIcon,
+  TargetIcon,
   type LucideIcon,
 } from "lucide-react";
 
@@ -20,6 +21,7 @@ const MENU_HREF = "/dashboard/menu";
 const tabIcons = {
   "/dashboard": HouseIcon,
   "/dashboard/my-courses": BookMarkedIcon,
+  "/dashboard/practice": TargetIcon,
   "/dashboard/favorites": HeartIcon,
   "/dashboard/courses": BookPlusIcon,
 } as const satisfies Record<DashboardNavHref, LucideIcon>;

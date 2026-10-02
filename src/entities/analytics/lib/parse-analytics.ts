@@ -18,9 +18,12 @@ const periodSchema = z.object({
 const subscriptionPlanSchema = z.object({
   id: z.string(),
   slug: z.string(),
-  title: z.string(),
+  title: z.string().optional().default(""),
+  titleRu: z.string().optional().default(""),
+  titleKz: z.string().optional().default(""),
   durationMonths: z.number(),
   priceKzt: z.number(),
+  order: z.number().optional(),
 });
 
 const subscriptionSchema = z.object({
@@ -45,21 +48,7 @@ const userAnalyticsOverviewSchema = z.object({
   lessons: z.object({
     completed: z.number(),
     totalTracked: z.number(),
-    watchedSecondsTotal: z.number(),
   }),
-  tests: z.object({
-    attempts: z.number(),
-    passed: z.number(),
-    passRate: z.number().nullable(),
-    averageScore: z.number().nullable(),
-  }),
-  streakDays: z.number(),
-  dailyActivity: z.array(
-    z.object({
-      date: z.string(),
-      watchedSeconds: z.number(),
-    }),
-  ),
   subscription: z.object({
     isActive: z.boolean(),
     subscription: subscriptionSchema.nullable(),
@@ -203,7 +192,9 @@ const adminSubscriptionsAnalyticsSchema = z.object({
   ),
 });
 
-export function parseUserAnalyticsOverview(data: unknown): UserAnalyticsOverview {
+export function parseUserAnalyticsOverview(
+  data: unknown,
+): UserAnalyticsOverview {
   return userAnalyticsOverviewSchema.parse(data);
 }
 

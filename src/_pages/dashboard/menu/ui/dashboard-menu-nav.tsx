@@ -3,6 +3,7 @@ import {
   BookPlusIcon,
   HeartIcon,
   HouseIcon,
+  TargetIcon,
   type LucideIcon,
 } from "lucide-react";
 
@@ -17,6 +18,7 @@ import { DashboardMenuSection } from "./dashboard-menu-section";
 const menuNavIcons = {
   "/dashboard": HouseIcon,
   "/dashboard/my-courses": BookMarkedIcon,
+  "/dashboard/practice": TargetIcon,
   "/dashboard/favorites": HeartIcon,
   "/dashboard/courses": BookPlusIcon,
 } as const satisfies Record<DashboardMenuNavHref, LucideIcon>;

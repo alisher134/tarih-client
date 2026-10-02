@@ -12,6 +12,8 @@
   "takeTest": "Пройти тест",
   "courseCompleted": "Курс завершён",
   "completedBadge": "Завершён",
+  "inProgress": "В процессе",
+  "completedSection": "Завершённые курсы",
   "progress": "Прогресс",
   "viewPlans": "Посмотреть тарифы",
   "subscriptionRequiredTitle": "Нужна подписка",
@@ -44,6 +46,7 @@
   "successFavoriteRemove": "Курс убран из избранного",
   "retry": "Повторить",
   "backToCourses": "К списку курсов",
+  "backToCourse": "Вернуться к курсу",
   "errors": {
     "loadFailed": "Не удалось загрузить курсы",
     "courseLoadFailed": "Не удалось загрузить курс",

@@ -10,6 +10,7 @@ import { getTranslations } from "next-intl/server";
 import { AppSidebar } from "@/shared/ui/app-sidebar";
 
 import { adminNavItems, type AdminNavHref } from "../model/nav-items";
+import { AdminDashboardNavLink } from "./admin-dashboard-nav-link";
 
 const navIcons = {
   "/admin": HouseIcon,
@@ -37,6 +38,7 @@ export async function AdminSidebar() {
       items={items}
       rootHref="/admin"
       isHiddenOnMobile
+      footerSlot={<AdminDashboardNavLink label={t("dashboard")} />}
     />
   );
 }

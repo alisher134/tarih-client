@@ -17,6 +17,7 @@ import headerKz from "./messages/kz/header.json";
 import homeKz from "./messages/kz/home.json";
 import lessonPlayerKz from "./messages/kz/lesson-player.json";
 import profileKz from "./messages/kz/profile.json";
+import practiceKz from "./messages/kz/practice.json";
 import takeTestKz from "./messages/kz/take-test.json";
 import requireAuthKz from "./messages/kz/require-auth.json";
 import signInKz from "./messages/kz/sign-in.json";
@@ -40,6 +41,7 @@ import headerRu from "./messages/ru/header.json";
 import homeRu from "./messages/ru/home.json";
 import lessonPlayerRu from "./messages/ru/lesson-player.json";
 import profileRu from "./messages/ru/profile.json";
+import practiceRu from "./messages/ru/practice.json";
 import takeTestRu from "./messages/ru/take-test.json";
 import requireAuthRu from "./messages/ru/require-auth.json";
 import signInRu from "./messages/ru/sign-in.json";
@@ -66,6 +68,7 @@ const messages = {
     home: homeKz,
     lessonPlayer: lessonPlayerKz,
     profile: profileKz,
+    practice: practiceKz,
     requireAuth: requireAuthKz,
     signIn: signInKz,
     signUp: signUpKz,
@@ -91,6 +94,7 @@ const messages = {
     home: homeRu,
     lessonPlayer: lessonPlayerRu,
     profile: profileRu,
+    practice: practiceRu,
     requireAuth: requireAuthRu,
     signIn: signInRu,
     signUp: signUpRu,
@@ -118,6 +122,7 @@ const messages = {
     home: typeof homeKz;
     lessonPlayer: typeof lessonPlayerKz;
     profile: typeof profileKz;
+    practice: typeof practiceKz;
     requireAuth: typeof requireAuthKz;
     signIn: typeof signInKz;
     signUp: typeof signUpKz;

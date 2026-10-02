@@ -49,16 +49,7 @@ export type UserAnalyticsOverview = {
   lessons: {
     completed: number;
     totalTracked: number;
-    watchedSecondsTotal: number;
   };
-  tests: {
-    attempts: number;
-    passed: number;
-    passRate: number | null;
-    averageScore: number | null;
-  };
-  streakDays: number;
-  dailyActivity: Array<{ date: string; watchedSeconds: number }>;
   subscription: {
     isActive: boolean;
     subscription: AnalyticsSubscription | null;

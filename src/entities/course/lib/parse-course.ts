@@ -14,7 +14,6 @@ import type {
   PlaybackUrl,
   Question,
   StudentCourseDetail,
-  StudentCourseLesson,
   StudentLessonTest,
   TestAttempt,
   UploadIntent,
@@ -87,6 +86,16 @@ const studentQuestionSchema = z.object({
   options: z.array(studentQuestionOptionSchema).optional().default([]),
 });
 
+export const testAttemptSchema = z.object({
+  id: z.string(),
+  userId: z.string(),
+  testId: z.string(),
+  score: z.number().nullable(),
+  passed: z.boolean().nullable(),
+  startedAt: z.string(),
+  completedAt: z.string().nullable(),
+});
+
 const studentLessonTestSchema = z.object({
   id: z.string(),
   title: z.string(),
@@ -95,6 +104,7 @@ const studentLessonTestSchema = z.object({
   timeLimit: z.number().nullable().optional().default(null),
   attemptsLimit: z.number().nullable().optional().default(null),
   questions: z.array(studentQuestionSchema).optional().default([]),
+  latestAttempt: testAttemptSchema.nullable().optional(),
 });
 
 const lessonMaterialSchema = z.object({
@@ -136,6 +146,8 @@ export const studentCourseLessonSchema = z.object({
   hasMaterials: z.boolean().optional(),
   hasTest: z.boolean().optional(),
   testId: z.string().nullable(),
+  isLocked: z.boolean().optional(),
+  isCompleted: z.boolean().optional(),
 });
 
 export const studentCourseDetailSchema = courseSchema.extend({
@@ -211,16 +223,6 @@ export const downloadUrlSchema = z.object({
   downloadUrl: z.string(),
   expiresIn: z.number(),
   materialId: z.string().optional(),
-});
-
-export const testAttemptSchema = z.object({
-  id: z.string(),
-  userId: z.string(),
-  testId: z.string(),
-  score: z.number().nullable(),
-  passed: z.boolean().nullable(),
-  startedAt: z.string(),
-  completedAt: z.string().nullable(),
 });
 
 export const uploadIntentSchema = z.object({

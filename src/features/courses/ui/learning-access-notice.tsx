@@ -19,6 +19,7 @@ type LearningAccessNoticeProps = {
   error: unknown;
   onRetry: () => void;
   layout?: "inline" | "page";
+  deniedSlot?: ReactNode;
   children: ReactNode;
 };
 
@@ -29,6 +30,7 @@ export function LearningAccessNotice({
   error,
   onRetry,
   layout = "inline",
+  deniedSlot,
   children,
 }: LearningAccessNoticeProps) {
   const t = useTranslations("courses");
@@ -40,7 +42,7 @@ export function LearningAccessNotice({
         when={isError}
         fallback={
           <Show when={isAccessDenied} fallback={children}>
-            <SubscriptionRequiredNotice layout={layout} />
+            {deniedSlot ?? <SubscriptionRequiredNotice layout={layout} />}
           </Show>
         }
       >

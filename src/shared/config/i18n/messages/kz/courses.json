@@ -12,6 +12,8 @@
   "takeTest": "Тест тапсыру",
   "courseCompleted": "Курс аяқталды",
   "completedBadge": "Аяқталды",
+  "inProgress": "Өту үстінде",
+  "completedSection": "Аяқталған курстар",
   "progress": "Прогресс",
   "viewPlans": "Тарифтерді көру",
   "subscriptionRequiredTitle": "Жазылым қажет",
@@ -44,6 +46,7 @@
   "successFavoriteRemove": "Курс сақталғандардан алып тасталды",
   "retry": "Қайталау",
   "backToCourses": "Курстар тізіміне",
+  "backToCourse": "Курсқа оралу",
   "errors": {
     "loadFailed": "Курстарды жүктеу мүмкін болмады",
     "courseLoadFailed": "Курсты жүктеу мүмкін болмады",

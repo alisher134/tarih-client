@@ -5,6 +5,7 @@ export type ApiErrorCode =
   | "LESSON_NOT_COMPLETED"
   | "TEST_TIME_LIMIT_EXCEEDED"
   | "TEST_ATTEMPTS_LIMIT_REACHED"
+  | "TEST_ALREADY_COMPLETED"
   | "INVALID_RESET_TOKEN"
   | "TOKEN_VERSION_MISMATCH";
 
@@ -40,9 +41,6 @@ export function getApiErrorCode(error: unknown): ApiErrorCode | null {
   return getApiErrorData(error)?.code ?? null;
 }
 
-export function isApiErrorCode(
-  error: unknown,
-  code: ApiErrorCode,
-): boolean {
+export function isApiErrorCode(error: unknown, code: ApiErrorCode): boolean {
   return getApiErrorCode(error) === code;
 }

@@ -5,7 +5,7 @@ import type { ReactNode } from "react";
 import { cn } from "cn";
 import {
   ChevronRightIcon,
-  ClipboardListIcon,
+  CheckCircle2Icon,
   LockIcon,
   PlayCircleIcon,
 } from "lucide-react";
@@ -38,46 +38,43 @@ export function CourseLessons({
 
   return (
     <section className="flex flex-col gap-3">
-      <SectionHeading
-        description={canOpenLessons ? t("freeOrderHint") : undefined}
-      >
-        {t("curriculum")}
-      </SectionHeading>
+      <SectionHeading>{t("curriculum")}</SectionHeading>
 
       <div className="flex flex-col gap-3">
-        {sortedLessons.map((lesson) => (
-          <div
-            key={lesson.id}
-            className="group/lesson overflow-hidden rounded-xl border border-border/70 bg-card shadow-xs transition-all duration-300 hover:border-primary/40 hover:shadow-md"
-          >
-            <CurriculumRow
-              title={lesson.title}
-              meta={
-                lesson.videoDuration != null
-                  ? formatDuration(lesson.videoDuration)
-                  : null
-              }
-              icon={<PlayCircleIcon className="size-4.5" aria-hidden />}
-              canOpen={canOpenLessons}
-              href={`/dashboard/courses/${slug}/lessons/${lesson.id}`}
-              lockedLabel={t("locked")}
-              isTest={false}
-            />
+        {sortedLessons.map((lesson) => {
+          const isLessonLocked = !canOpenLessons || lesson.isLocked;
 
-            <Show when={lesson.hasTest === true && lesson.testId != null}>
+          return (
+            <div
+              key={lesson.id}
+              className={cn(
+                "group/lesson overflow-hidden rounded-xl border border-border/70 bg-card shadow-xs transition-all duration-300",
+                !isLessonLocked && "hover:border-primary/40 hover:shadow-md",
+                isLessonLocked && "opacity-75",
+              )}
+            >
               <CurriculumRow
-                title={t("test")}
-                meta={null}
-                icon={<ClipboardListIcon className="size-4.5" aria-hidden />}
-                canOpen={canOpenLessons}
-                href={`/dashboard/courses/${slug}/lessons/${lesson.id}/test`}
+                title={lesson.title}
+                meta={
+                  lesson.videoDuration != null
+                    ? formatDuration(lesson.videoDuration)
+                    : null
+                }
+                icon={
+                  lesson.isCompleted ? (
+                    <CheckCircle2Icon className="size-4.5" aria-hidden />
+                  ) : (
+                    <PlayCircleIcon className="size-4.5" aria-hidden />
+                  )
+                }
+                canOpen={!isLessonLocked}
+                href={`/dashboard/courses/${slug}/lessons/${lesson.id}`}
                 lockedLabel={t("locked")}
-                isTest={true}
-                className="relative border-t border-border/50 bg-muted/10 before:absolute before:left-0 before:top-0 before:h-full before:w-[3px] before:bg-primary/30"
+                isCompleted={lesson.isCompleted}
               />
-            </Show>
-          </div>
-        ))}
+            </div>
+          );
+        })}
       </div>
     </section>
   );
@@ -91,7 +88,7 @@ type CurriculumRowProps = {
   href: string;
   lockedLabel: string;
   className?: string;
-  isTest?: boolean;
+  isCompleted?: boolean;
 };
 
 function CurriculumRow({
@@ -102,7 +99,7 @@ function CurriculumRow({
   href,
   lockedLabel,
   className,
-  isTest = false,
+  isCompleted = false,
 }: CurriculumRowProps) {
   const content = (
     <>
@@ -110,7 +107,7 @@ function CurriculumRow({
         className={cn(
           "flex size-9 shrink-0 items-center justify-center rounded-full transition-colors",
           canOpen
-            ? isTest
+            ? isCompleted
               ? "bg-primary/10 text-primary group-hover:bg-primary/20"
               : "bg-muted/60 text-muted-foreground group-hover:bg-primary/10 group-hover:text-primary"
             : "bg-muted/50 text-muted-foreground/50",
@@ -122,6 +119,7 @@ function CurriculumRow({
         className={cn(
           "min-w-0 flex-1 font-medium transition-colors",
           canOpen ? "group-hover:text-foreground" : "text-muted-foreground",
+          isCompleted && "text-foreground",
         )}
       >
         {title}

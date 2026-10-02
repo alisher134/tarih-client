@@ -113,6 +113,7 @@ export type LessonTest = {
 
 export type StudentLessonTest = Omit<LessonTest, "questions"> & {
   questions: StudentQuestion[];
+  latestAttempt?: TestAttempt | null;
 };
 
 export type LessonMaterial = {
@@ -150,6 +151,8 @@ export type StudentCourseLesson = {
   hasMaterials?: boolean;
   hasTest?: boolean;
   testId: string | null;
+  isLocked?: boolean;
+  isCompleted?: boolean;
 };
 
 export type CourseDetail = Course & {

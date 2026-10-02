@@ -254,7 +254,7 @@ export function TestAttemptForm({
             <DialogDescription>{t("confirmLeave")}</DialogDescription>
           </DialogHeader>
 
-          <DialogFooter>
+          <DialogFooter className="gap-3 sm:gap-3">
             <DialogClose render={<Button variant="outline" />}>
               {t("cancelLeave") ?? "Остаться"}
             </DialogClose>

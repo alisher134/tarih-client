@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  BookOpenIcon,
-  FlameIcon,
-  GraduationCapIcon,
-  TimerIcon,
-} from "lucide-react";
+import { BookOpenIcon, GraduationCapIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 import type { UserAnalyticsOverview } from "@/entities/analytics";
@@ -13,7 +8,6 @@ import { useMySubscription } from "@/entities/subscription";
 import { formatPriceKzt } from "@/entities/subscription";
 import { getErrorMessage } from "@/shared/api";
 import { SUBSCRIPTION_PLANS_HREF } from "@/shared/config/routes";
-import { formatDuration } from "@/shared/lib/format-duration";
 import { AsyncWrapper } from "@/shared/ui/async-wrapper";
 import { Button } from "@/shared/ui/button";
 import { ErrorAlert } from "@/shared/ui/error-alert";
@@ -24,11 +18,6 @@ import { Show } from "@/shared/ui/show";
 
 import { useAnalyticsOverview } from "../model/use-analytics-overview";
 import { AnalyticsStatCard } from "./analytics-stat-card";
-
-function formatPercent(value: number | null) {
-  if (value == null) return "—";
-  return `${value}%`;
-}
 
 export function AnalyticsOverview() {
   const t = useTranslations("dashboardAnalytics");
@@ -65,7 +54,7 @@ function AnalyticsOverviewContent({ overview }: AnalyticsOverviewContentProps) {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="grid gap-3 sm:grid-cols-2">
         <AnalyticsStatCard
           icon={BookOpenIcon}
           label={t("overview.courses")}
@@ -77,36 +66,9 @@ function AnalyticsOverviewContent({ overview }: AnalyticsOverviewContentProps) {
           label={t("overview.lessonsCompleted")}
           value={String(overview.lessons.completed)}
         />
-        <AnalyticsStatCard
-          icon={TimerIcon}
-          label={t("overview.watchTime")}
-          value={formatDuration(overview.lessons.watchedSecondsTotal)}
-        />
-        <AnalyticsStatCard
-          icon={FlameIcon}
-          label={t("overview.streak")}
-          value={String(overview.streakDays)}
-          detail={t("overview.streakDays")}
-        />
       </div>
 
-      <div className="grid gap-3 sm:grid-cols-2">
-        <div className="rounded-xl border p-4">
-          <p className="text-sm text-muted-foreground">{t("overview.tests")}</p>
-          <p className="mt-1 text-2xl font-semibold">
-            {overview.tests.attempts}
-          </p>
-          <p className="mt-1 text-sm text-muted-foreground">
-            {t("overview.testsDetails", {
-              passed: overview.tests.passed,
-              passRate: formatPercent(overview.tests.passRate),
-              averageScore: formatPercent(overview.tests.averageScore),
-            })}
-          </p>
-        </div>
-
-        <SubscriptionOverviewCard />
-      </div>
+      <SubscriptionOverviewCard />
     </div>
   );
 }

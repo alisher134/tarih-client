@@ -12,6 +12,10 @@
     "playbackFailed": "Не удалось загрузить видео",
     "downloadFailed": "Не удалось скачать материал",
     "materialsLoadFailed": "Не удалось загрузить материалы",
-    "progressFailed": "Не удалось сохранить прогресс"
-  }
+    "progressFailed": "Не удалось сохранить прогресс",
+    "lessonLocked": "Этот урок пока недоступен. Завершите предыдущие уроки."
+  },
+  "noSubscriptionTitle": "Нужна подписка",
+  "noSubscriptionDescription": "Оформите подписку, чтобы смотреть урок.",
+  "getSubscription": "Получить подписку"
 }

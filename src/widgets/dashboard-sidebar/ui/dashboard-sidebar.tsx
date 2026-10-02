@@ -3,6 +3,7 @@ import {
   HeartIcon,
   HouseIcon,
   LibraryIcon,
+  TargetIcon,
   type LucideIcon,
 } from "lucide-react";
 import { getTranslations } from "next-intl/server";
@@ -15,6 +16,7 @@ import { DashboardAdminNavLink } from "./dashboard-admin-nav-link";
 const navIcons = {
   "/dashboard": HouseIcon,
   "/dashboard/my-courses": BookIcon,
+  "/dashboard/practice": TargetIcon,
   "/dashboard/favorites": HeartIcon,
   "/dashboard/courses": LibraryIcon,
 } as const satisfies Record<DashboardNavHref, LucideIcon>;

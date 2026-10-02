@@ -15,7 +15,6 @@ import { Card, CardContent } from "@/shared/ui/card";
 
 import { useCoursePage } from "../model/use-course-page";
 import { CourseLessons } from "./course-lessons";
-import { CourseNextActionCta } from "./course-next-action-cta";
 import { Progress } from "@/shared/ui/progress";
 import { FavoriteCourseButton } from "./favorite-course-button";
 import {
@@ -108,23 +107,7 @@ export function CourseDetails({ slug }: CourseDetailsProps) {
                       onRetry={() => {
                         void coursePage.refetchSubscription();
                       }}
-                      grantedSlot={
-                        <CourseNextActionCta
-                          courseSlug={course.slug}
-                          enrollmentStatus={
-                            coursePage.enrollmentProgress?.status
-                          }
-                          nextAction={coursePage.nextAction}
-                          canAccess={coursePage.canAccess}
-                          isLoading={coursePage.isLearningSummaryLoading}
-                          isError={coursePage.isLearningSummaryError}
-                          error={coursePage.learningSummaryError}
-                          onRetry={() => {
-                            void coursePage.refetchLearningSummary();
-                          }}
-                          className="w-full"
-                        />
-                      }
+                      grantedSlot={null}
                       deniedSlot={
                         <LinkButton
                           href={SUBSCRIPTION_PLANS_HREF}
