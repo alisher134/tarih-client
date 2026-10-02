@@ -225,7 +225,7 @@ export default function AdminSubscriptionPlansPage() {
       </Card>
 
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-        <DialogContent className="max-w-md">
+        <DialogContent className="sm:max-w-2xl">
           <DialogHeader>
             <DialogTitle>
               {editingPlan ? t("plans.editPlan") : t("plans.createPlan")}
